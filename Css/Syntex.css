@@ -18,6 +18,190 @@ body {
   padding: 40px 20px;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Readex+Pro:wght@400;500;600;700&display=swap');
+
+:root {
+  --navy-primary: #0A2540;
+  --teal-accent: #0D9488;
+  --gold-accent: #F59E0B;
+  --bg-light: #FFFFFF;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+}
+
+body {
+  margin: 0;
+  font-family: 'Readex Pro', sans-serif;
+  direction: rtl;
+}
+
+/* الهيدر الرئيسي */
+.site-header {
+  background-color: var(--bg-light);
+  box-shadow: 0 4px 20px rgba(10, 37, 64, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border-bottom: 3px solid var(--teal-accent);
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* الشعار */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+
+.logo-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--navy-primary);
+  color: var(--teal-accent);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.logo-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.brand-name {
+  color: var(--navy-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.brand-tagline {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+/* قائمة التصفح */
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 28px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: var(--text-dark);
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+  position: relative;
+  padding: 8px 0;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: var(--teal-accent);
+}
+
+.main-nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background-color: var(--teal-accent);
+  border-radius: 2px;
+}
+
+/* الأزرار */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-portal {
+  text-decoration: none;
+  color: var(--navy-primary);
+  border: 1.5px solid var(--navy-primary);
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-portal:hover {
+  background-color: var(--navy-primary);
+  color: #ffffff;
+}
+
+.btn-register {
+  text-decoration: none;
+  background-color: var(--teal-accent);
+  color: #ffffff;
+  padding: 9px 20px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(13, 148, 136, 0.2);
+}
+
+.btn-register:hover {
+  background-color: var(--navy-primary);
+  box-shadow: 0 4px 12px rgba(10, 37, 64, 0.25);
+}
+
+/* قائمة الجوال */
+.mobile-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}
+
+.mobile-toggle span {
+  width: 25px;
+  height: 3px;
+  background-color: var(--navy-primary);
+  border-radius: 2px;
+}
+
+/* الاستجابة للهواتف (Responsive) */
+@media (max-width: 900px) {
+  .main-nav, 
+  .header-actions {
+    display: none;
+  }
+  
+  .mobile-toggle {
+    display: flex;
+  }
+}
+
+
 /* =========================
    FEATURES 
 ========================= */
