@@ -9,18 +9,47 @@
     <title>Ryan School</title>
 </head>
 <body>
-<header>
-    <div> <img src="image.jpg" alt="وصف الصورة للزوار ومحركات البحث">
-    <div> <h1> مدرسة الريان </h1> </div>
-   </div>
-  <nav class="navigtion">
-      <a href="#about">About Us</a>
-      <a href="#academic">Academic</a>
-      <a href="#News&Events">News and Events</a>
-      <a href="#contact">Contact</a>
-    </nav>
-</header>
+<header class="site-header">
+  <div class="header-container">
+    <!-- الشعار (Logo) -->
+    <a href="#" class="logo">
+      <div class="logo-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="brand-name">مدرسة الريان</span>
+        <span class="brand-tagline">Al-Rayan School</span>
+      </div>
+    </a>
 
+    <!-- قائمة التصفح الرئيسية (Nav Menu) -->
+    <nav class="main-nav">
+      <ul>
+        <li><a href="#" class="active">الرئيسية</a></li>
+        <li><a href="#">عن المدرسة</a></li>
+        <li><a href="#">المراحل الدراسية</a></li>
+        <li><a href="#">الأخبار والفعاليات</a></li>
+        <li><a href="#">اتصل بنا</a></li>
+      </ul>
+    </nav>
+
+    <!-- أزرار الإجراءات (CTAs) -->
+    <div class="header-actions">
+      <a href="#" class="btn-portal">بوابة الطلاب</a>
+      <a href="#" class="btn-register">تسجيل جديد</a>
+    </div>
+
+    <!-- زر القائمة للهواتف (Mobile Menu Toggle) -->
+    <button class="mobile-toggle" aria-label="فتح القائمة">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+<--features-section-->
     <section class="features-section">
   <div class="container">
     <h2 class="section-title">لماذا تختار مدرسة الريان؟</h2>
