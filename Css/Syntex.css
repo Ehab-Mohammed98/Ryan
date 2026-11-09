@@ -271,6 +271,14 @@ body {
   backgruond: #1E293B ;
   text-align: center ; 
 }
+.footer p{
+  color: #1E293B;
+  font-size: 15px;
+}
+.footer p>span{
+  color:#0D9488;
+  font-size:15px;
+}
 /* قائمة الجوال */
 .mobile-toggle {
   display: none;
