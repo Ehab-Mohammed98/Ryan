@@ -18,6 +18,9 @@ body {
   padding: 40px 20px;
 }
 
+/* =========================
+   FEATURES 
+========================= */
 .features-section {
   max-width: 1200px;
   margin: 0 auto;
@@ -114,4 +117,203 @@ body {
   font-size: 0.95rem;
   line-height: 1.7;
   margin: 0;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    background: #0b2b4c;
+
+    color: #fff;
+
+    padding: 30px 8%;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+}
+
+.footer-title {
+    font-size: 15px;
+}
+
+.footer-title span {
+    color: #f28c28;
+}
+
+.footer .social-icons {
+    margin: 0;
+
+    gap: 10px;
+}
+
+.footer .social-icons a {
+    width: 35px;
+    height: 35px;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    font-size: 15px;
+}
+
+.footer .social-icons a:hover {
+    background: #f28c28;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+    header {
+        padding: 0 5%;
+    }
+
+    .main {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .main h2 {
+        font-size: 40px;
+    }
+
+    .main h2 span {
+        font-size: 34px;
+    }
+
+    .projects {
+        padding-left: 5%;
+        padding-right: 5%;
+    }
+
+    .projects .content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    header {
+        height: auto;
+
+        padding: 20px;
+
+        flex-direction: column;
+
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 22px;
+    }
+
+    .navigtion {
+        gap: 18px;
+    }
+
+    .navigtion a {
+        font-size: 14px;
+    }
+
+
+    /* Main */
+
+    .main {
+        min-height: 100vh;
+
+        padding: 150px 20px 60px;
+
+        text-align: center;
+
+        justify-content: center;
+    }
+
+    .main h2 {
+        font-size: 32px;
+    }
+
+    .main h2 span {
+        font-size: 27px;
+    }
+
+    .main h3 {
+        font-size: 16px;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+
+    /* Services */
+
+    .services {
+        grid-template-columns: 1fr;
+
+        width: 90%;
+
+        margin: 50px auto;
+    }
+
+
+    /* Projects */
+
+    .projects {
+        padding: 60px 20px;
+    }
+
+    .projects .content {
+        grid-template-columns: 1fr;
+    }
+
+    .project-image {
+        height: 250px;
+    }
+
+
+    /* Contact */
+
+    #contact {
+        padding: 60px 20px;
+    }
+
+    #contact .content {
+        flex-direction: column;
+
+        align-items: center;
+    }
+
+    #contact .card {
+        width: 100%;
+
+        max-width: 400px;
+    }
+
+
+    /* Footer */
+
+    .footer {
+        flex-direction: column;
+
+        gap: 20px;
+
+        text-align: center;
+    }
+
+    .footer .social-icons {
+        justify-content: center;
+    }
+
 }
