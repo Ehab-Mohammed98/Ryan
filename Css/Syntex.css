@@ -266,6 +266,11 @@ body {
   border-radius: 20px;
 }
 
+/* التنسيق العام FOOTRE الفاتحة */
+.footer{
+  backgruond: #1E293B ;
+  text-align: center ; 
+}
 /* قائمة الجوال */
 .mobile-toggle {
   display: none;
