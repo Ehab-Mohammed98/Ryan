@@ -144,27 +144,6 @@ body {
 .footer-title span {
     color: #f28c28;
 }
-
-.footer .social-icons {
-    margin: 0;
-
-    gap: 10px;
-}
-
-.footer .social-icons a {
-    width: 35px;
-    height: 35px;
-
-    background: rgba(255, 255, 255, 0.1);
-
-    font-size: 15px;
-}
-
-.footer .social-icons a:hover {
-    background: #f28c28;
-}
-
-
 /* =========================
    TABLET
 ========================= */
