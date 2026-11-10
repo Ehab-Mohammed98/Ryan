@@ -268,11 +268,11 @@ body {
 
 /* التنسيق العام FOOTRE الفاتحة */
 .footer{
-  backgruond-color:  #1E293B ;
+  backgruond-color:  #ffffff ;
   text-align: center ; 
 }
 .footer p{
-  color: #ffffff;
+  color: # #1E293B;
   font-size: 15px;
 }
 .footer p>span{
