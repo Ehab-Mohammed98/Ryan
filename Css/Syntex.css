@@ -468,3 +468,10 @@ body {
     display: flex;
   }
 }
+
+/* الاستجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+  .contact-body {
+    grid-template-columns: 1fr;
+  }
+}
