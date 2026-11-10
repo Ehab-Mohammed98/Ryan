@@ -268,15 +268,15 @@ body {
 
 /* التنسيق العام FOOTRE الفاتحة */
 .footer{
-  backgruond:  #1E293B ;
+  backgruond-color:  #1E293B ;
   text-align: center ; 
 }
 .footer p{
-  color: #0D9488;
+  color: #ffffff;
   font-size: 15px;
 }
 .footer p>span{
-  color: #FFFFFF;
+  color: #0D9488;
   font-size:15px;
 }
 /* قائمة الجوال */
