@@ -267,46 +267,164 @@ body {
 }
 /!-- تواصل --/
 /* تنسيق القسم الخارجي لتوسيط العنصر في منتصف الشاشة تماماً */
+
+/* تنسيق التواصل */
 .contact-section {
   width: 100%;
-  min-height: 100vh;
   display: flex;
-  justify-content: center; /* توسيط أفقياً */
-  align-items: center;     /* توسيط رأسياً */
-  padding: 40px 20px;
-  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
 }
 
-/* الحاوي الرئيسي للكارت (يحدد العرض ويمنع التمدد الزائد) */
+/* Container الحاوي الرئيسي */
 .contact-container {
   width: 100%;
-  max-width: 1000px; /* تحديد عرض أقصى مناسب */
-  margin: 0 auto;    /* ضمان التوسيط */
-  display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 0;            /* دمج الكارتين داخل إطار واحد */
+  max-width: 1050px;
   background: #ffffff;
-  border-radius: 24px;
-  box-shadow: 0 15px 40px rgba(10, 37, 64, 0.1);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(10, 37, 64, 0.08);
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
   overflow: hidden;
 }
 
-/* كارت المعلومات المباشرة (الجانب الداكن) */
+/* الكارت الكحلي الجانبي */
 .contact-info-card {
-  background-color: #071727; /* اللون الكحلي الداكن */
+  background-color: #071727;
   color: #ffffff;
   padding: 40px 32px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-/* كارت النموذج (الجانب الفاتح) */
+.info-header h2 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  margin: 0 0 10px 0;
+}
+
+.info-header p {
+  color: #94A3B8;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 36px;
+}
+
+/* ترتيب الأيقونة والنص بجانب بعضهما */
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* المربع المخصص للأيقونة لمنع التمدد الضخم */
+.info-icon {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  background-color: rgba(13, 148, 136, 0.15);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* تقييد حجم الأيقونة (SVG) */
+.info-icon svg {
+  width: 24px !important;
+  height: 24px !important;
+  max-width: 24px !important;
+  max-height: 24px !important;
+  stroke: #2DD4BF;
+}
+
+.info-text h4 {
+  margin: 0 0 4px 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.info-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #94A3B8;
+}
+
+/* قسم النموذج الفاتح */
 .contact-form-card {
   padding: 40px 36px;
   background-color: #ffffff;
 }
 
+.contact-form-card h3 {
+  color: #0A2540;
+  font-size: 1.4rem;
+  font-weight: 800;
+  margin: 0 0 24px 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #1E293B;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #1E293B;
+  background-color: #F8FAFC;
+}
+
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #0D9488;
+  background-color: #ffffff;
+}
+
+.btn-send {
+  width: 100%;
+  background-color: #0D9488;
+  color: #ffffff;
+  border: none;
+  padding: 13px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-send:hover {
+  background-color: #0A2540;
+}
+/* نهاية تننسيق التواصل */
 /* التنسيق العام FOOTRE الفاتحة */
 .footer{
   backgruond-color:  #ffffff ;
