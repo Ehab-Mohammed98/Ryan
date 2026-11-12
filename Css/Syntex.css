@@ -121,6 +121,12 @@ body {
   opacity: 0.9;
 }
 
+/* بداية اسفل الموقع  */
+.footer{
+  text-align: center;
+  font-size: 15px;
+}
+/* نهاية اسفل الشاشه*/
 /* التجاوب مع الشاشات الصغيرة */
 @media (max-width: 768px) {
   .header-container {
