@@ -831,14 +831,14 @@ container {
 .input-group textarea:focus {
   outline: none;
   border-color: var(--teal-accent);
-  background-color: #ffffff;
+  background-color: #000000;
   box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
 }
 
 .btn-submit {
   width: 100%;
   background-color: var(--teal-accent);
-  color: #ffffff;
+  color: #000000;
   border: none;
   padding: 14px;
   border-radius: 10px;
