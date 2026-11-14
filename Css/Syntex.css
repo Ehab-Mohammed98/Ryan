@@ -175,8 +175,7 @@ body {
 /* =========================
    MAIN BUTTON
 ========================= */
-
-.main .main-btn {
+.btn {
     display: inline-block;
 
     background: #f28c28;
@@ -194,9 +193,8 @@ body {
     box-shadow: 0 7px 20px rgba(242, 140, 40, 0.25);
 }
 
-.main-btn:hover {
+.btn:hover {
     background: #d97213;
-
     transform: translateY(-3px);
 }
 /*--End Main --*/
