@@ -199,8 +199,299 @@ body {
 
     transform: translateY(-3px);
 }
+/*--End Main --*/
 
+/*-- container card--*/
+container {
+      max-width: 1150px;
+      margin: 0 auto;
+    }
 
+    /* عناوين الأقسام */
+    .section-header {
+      text-align: center;
+      margin-bottom: 45px;
+    }
+
+    .section-header h2 {
+      color: var(--navy-primary);
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .section-header .line {
+      width: 60px;
+      height: 4px;
+      background-color: var(--teal-accent);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* =========================================
+       1. تنسيقات بطاقات المزايا الثلاثة
+       ========================================= */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+      gap: 28px;
+      align-items: center;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 36px 28px 24px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 15px 35px rgba(10, 37, 64, 0.1);
+    }
+
+    .icon-wrapper {
+      width: 64px;
+      height: 64px;
+      background-color: var(--teal-light);
+      color: var(--teal-accent);
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      color: var(--navy-primary);
+      font-size: 1.35rem;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 28px;
+      flex-grow: 1;
+    }
+
+    .card-footer {
+      width: 100%;
+      padding-top: 16px;
+      border-top: 1px solid #F1F5F9;
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--teal-accent);
+    }
+
+    /* البطاقة الوسطى المميزة */
+    .card.featured {
+      background-color: var(--navy-dark);
+      color: #ffffff;
+      padding-top: 44px;
+      transform: scale(1.03);
+    }
+
+    .card.featured:hover {
+      transform: scale(1.03) translateY(-6px);
+    }
+
+    .card.featured .icon-wrapper {
+      background-color: rgba(13, 148, 136, 0.2);
+      color: #2DD4BF;
+      border: 1px solid rgba(45, 212, 191, 0.3);
+    }
+
+    .card.featured .card-title {
+      color: #ffffff;
+    }
+
+    .card.featured .card-desc {
+      color: #94A3B8;
+    }
+
+    .card.featured .card-footer {
+      border-top-color: rgba(255, 255, 255, 0.1);
+      color: #2DD4BF;
+    }
+
+    .badge {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background-color: var(--gold-badge);
+      color: #ffffff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* =========================================
+       2 & 3. قسم الصورة التوضيحية والرسم البياني
+       ========================================= */
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    /* بطاقة الصورة */
+    .lab-image-card {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(10, 37, 64, 0.06);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lab-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 320px;
+      overflow: hidden;
+    }
+
+    .lab-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .lab-image-card:hover .lab-image-wrapper img {
+      transform: scale(1.05);
+    }
+
+    .image-tag {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background-color: rgba(10, 37, 64, 0.9);
+      color: #ffffff;
+      padding: 6px 16px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+    .lab-image-caption {
+      padding: 24px;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .lab-image-caption h3 {
+      color: var(--navy-primary);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .lab-image-caption p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+
+    /* بطاقة الرسم البياني التفاعلي */
+    .chart-card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 30px rgba(10, 37, 64, 0.06);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .chart-header h3 {
+      color: var(--navy-primary);
+      font-size: 1.25rem;
+      font-weight: 800;
+    }
+
+    /* أزرار التبديل بين الشريطي والدائري */
+    .chart-controls {
+      display: flex;
+      background-color: #F1F5F9;
+      padding: 4px;
+      border-radius: 10px;
+    }
+
+    .toggle-btn {
+      border: none;
+      background: transparent;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .toggle-btn.active {
+      background-color: var(--navy-primary);
+      color: #ffffff;
+      box-shadow: 0 2px 8px rgba(10, 37, 64, 0.2);
+    }
+
+    .chart-canvas-container {
+      position: relative;
+      height: 250px;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    /* ملخص الأرقام السريع أسفل الرسم */
+    .stats-summary {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #F1F5F9;
+      text-align: center;
+    }
+
+    .stat-item span.num {
+      display: block;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--teal-accent);
+    }
+
+    .stat-item span.lbl {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+/*--End container card--*/
 /* بداية اسفل الموقع  */
 .footer{
   text-align: center;
@@ -219,3 +510,16 @@ body {
     justify-content: center;
   }
 }
+
+/* التجاوب مع الشاشات الصغيرة */
+    @media (max-width: 900px) {
+      .showcase-grid {
+        grid-template-columns: 1fr;
+      }
+      .card.featured {
+        transform: scale(1);
+      }
+      .card.featured:hover {
+        transform: translateY(-6px);
+      }
+    }
