@@ -121,6 +121,86 @@ body {
   opacity: 0.9;
 }
 
+/* =========================
+   MAIN SECTION
+========================= */
+
+.main {
+    min-height: 100vh;
+
+    display: flex;
+    align-items: center;
+
+    padding: 100px 8% 60px;
+
+    background:
+        linear-gradient(
+            120deg,
+            #ffffff 0%,
+            #f1f5f9 55%,
+            #e8eef5 100%
+        );
+}
+
+.main > div {
+    max-width: 750px;
+}
+
+.main h2 {
+    color: #0b2b4c;
+
+    font-size: 48px;
+    line-height: 1.3;
+
+    margin-bottom: 20px;
+}
+
+.main h2 span {
+    color: #f28c28;
+    font-size: 40px;
+}
+
+.main h3 {
+    color: #555;
+
+    font-size: 20px;
+    font-weight: 400;
+
+    line-height: 1.8;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================
+   MAIN BUTTON
+========================= */
+
+.main-btn {
+    display: inline-block;
+
+    background: #f28c28;
+    color: #fff;
+
+    padding: 14px 35px;
+
+    border-radius: 8px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    transition: 0.3s;
+
+    box-shadow: 0 7px 20px rgba(242, 140, 40, 0.25);
+}
+
+.main-btn:hover {
+    background: #d97213;
+
+    transform: translateY(-3px);
+}
+
+
 /* بداية اسفل الموقع  */
 .footer{
   text-align: center;
