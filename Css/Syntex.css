@@ -176,7 +176,7 @@ body {
    MAIN BUTTON
 ========================= */
 
-.main-btn {
+.main .main-btn {
     display: inline-block;
 
     background: #f28c28;
