@@ -724,7 +724,10 @@ container {
   flex-direction: column;
   justify-content: space-between;
 }
-.contact-info-box h3,p{
+.contact-info-box h3{
+  color:#000000;
+}
+.contact-info-box p{
   color:#000000;
 }
 .info-top h3 {
