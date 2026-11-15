@@ -725,18 +725,19 @@ container {
   justify-content: space-between;
 }
 
+.contact-info-box h3,p{
+  color:#000000;
+}
 .info-top h3 {
   font-size: 1.45rem;
   font-weight: 800;
   margin-bottom: 10px;
-  color:#000000;
 }
 
 .info-top p {
   color: #94A3B8;
   font-size: 0.92rem;
   line-height: 1.7;
-   color:#000000;
 }
 
 .info-items {
