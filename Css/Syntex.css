@@ -775,13 +775,17 @@ container {
 }
 
 .info-row span,
+.info-row h4,
 .info-row a {
   font-size: 0.88rem;
   color: #CBD5E1;
   text-decoration: none;
   transition: color 0.3s;
 }
-
+.info-row span,
+.info-row a{
+  color:#000000;
+}
 .info-row a:hover {
   color: #2DD4BF;
 }
