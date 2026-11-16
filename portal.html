@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>بوابة الطلاب - مدرسة الريان</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="Css/portal.css">
+</head>
+<body>
+
+  <div class="portal-card">
+    <div class="portal-header">
+      <div class="portal-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
+        </svg>
+      </div>
+      <h2>بوابة الطلاب</h2>
+      <p>سجّل الدخول للوصول إلى الجدول الدراسي والدرجات</p>
+    </div>
+
+    <div class="portal-body">
+      <form action="#" method="POST">
+        <div class="input-group">
+          <label for="studentId">رقم الهوية / الرقم الأكاديمي</label>
+          <input type="text" id="studentId" placeholder="أدخل رقم الهوية" required>
+        </div>
+
+        <div class="input-group">
+          <label for="password">كلمة المرور</label>
+          <input type="password" id="password" placeholder="••••••••" required>
+        </div>
+
+        <div class="portal-options">
+          <label><input type="checkbox"> تذكرني</label>
+          <a href="#">نسيت كلمة المرور؟</a>
+        </div>
+
+        <button type="submit" class="btn-login">تسجيل الدخول</button>
+      </form>
+
+      <a href="index.html" class="back-home">← العودة إلى الصفحة الرئيسية</a>
+    </div>
+  </div>
+
+</body>
+</html>
