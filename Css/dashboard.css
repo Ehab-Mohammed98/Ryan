@@ -1,0 +1,32 @@
+.flex-welcome {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.stage-selector {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.stage-selector label {
+  font-weight: 700;
+  color: var(--navy-primary);
+  font-size: 0.92rem;
+}
+
+.stage-selector select {
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 2px solid var(--teal-accent);
+  font-family: 'Cairo', sans-serif;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--navy-primary);
+  background-color: #F8FAFC;
+  cursor: pointer;
+  outline: none;
+}
