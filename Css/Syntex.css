@@ -171,7 +171,17 @@ body {
     margin-bottom: 30px;
 }
 
-
+main a{
+  background-color: #14B8A6;
+  color:#ffffff;
+  font-size:18px;
+  text-decoration: none;
+  padding: 8px 18px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  transition: background 0.3s;
+}
 /* =========================
    MAIN BUTTON
 ========================= */
