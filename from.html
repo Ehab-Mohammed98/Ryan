@@ -3,216 +3,153 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>التسجيل والقبول - مدرسة الريان</title>
+  <title>لوحة الطالب - مدرسة الريان</title>
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="Css/register.css">
+  <link rel="stylesheet" href="dashboard.css">
 </head>
 <body>
 
-  <section class="registration-section">
-    <div class="reg-container">
-      
-      <!-- ترويسة النموذج الكحلية -->
-      <div class="reg-header">
-        <span class="reg-badge">العام الدراسي 2026 - 2027</span>
-        <h2>نموذج طلب تسجيل طالب جديد</h2>
-        <p>يرجى تعبئة البيانات بدقة، وسيقوم فريق القبول والتسجيل في مدرسة الريان بالتواصل معكم لإتمام الإجراءات.</p>
-      </div>
-
-      <!-- محتوى الفورم -->
-      <form class="reg-form" action="#" method="POST">
-        
-        <!-- القسم الأول: بيانات الطالب -->
-        <div class="form-block">
-          <div class="block-title">
-            <span class="step-num">1</span>
-            <h3>بيانات الطالب</h3>
-          </div>
-
-          <div class="grid-2">
-            <div class="input-box">
-              <label for="studentName">اسم الطالب الرباعي <span>*</span></label>
-              <input type="text" id="studentName" placeholder="أدخل اسم الطالب كاملاً" required>
-            </div>
-
-            <div class="input-box">
-              <label for="idNumber">رقم الهوية الوطنية / الإقامة <span>*</span></label>
-              <input type="text" id="idNumber" placeholder="10xxxxxxxx" maxlength="10" required>
-            </div>
-          </div>
-
-          <div class="grid-3">
-            <div class="input-box">
-              <label for="birthDate">تاريخ الميلاد <span>*</span></label>
-              <input type="date" id="birthDate" required>
-            </div>
-
-            <div class="input-box">
-              <label for="nationality">الجنسية <span>*</span></label>
-              <input type="text" id="nationality" placeholder="مثال: سعودي" required>
-            </div>
-
-            <div class="input-box">
-              <label for="gender">الجنس <span>*</span></label>
-              <select id="gender" required>
-                <option value="" disabled selected>اختر...</option>
-                <option value="male">ذكر</option>
-                <option value="female">أنثي</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- القسم الثاني: البيانات الأكاديمية -->
-        <div class="form-block">
-          <div class="block-title">
-            <span class="step-num">2</span>
-            <h3>المرحلة الدراسية المطلوبة</h3>
-          </div>
-
-          <div class="grid-3">
-            <div class="input-box">
-              <label for="stage">المرحلة الدراسية <span>*</span></label>
-              <select id="stage" required>
-                <option value="" disabled selected>اختر المرحلة...</option>
-                <option value="kg">رياض الأطفال (تمهيدي)</option>
-                <option value="primary">المرحلة الابتدائية</option>
-                <option value="middle">المرحلة المتوسطة</option>
-                <option value="high">المرحلة الثانوية</option>
-              </select>
-            </div>
-
-            <div class="input-box">
-              <label for="grade">الصف الدراسي <span>*</span></label>
-              <select id="grade" required>
-                <option value="" disabled selected>اختر الصف...</option>
-                <option value="1">الصف الأول</option>
-                <option value="2">الصف الثاني</option>
-                <option value="3">الصف الثالث</option>
-                <option value="4">الصف الرابع</option>
-                <option value="5">الصف الخامس</option>
-                <option value="6">الصف السادس</option>
-              </select>
-            </div>
-
-            <div class="input-box">
-              <label for="prevSchool">المدرسة السابقة (إن وجدت)</label>
-              <input type="text" id="prevSchool" placeholder="اسم المدرسة السابقة">
-            </div>
-          </div>
-        </div>
-
-        <!-- القسم الثالث: بيانات ولي الأمر -->
-        <div class="form-block">
-          <div class="block-title">
-            <span class="step-num">3</span>
-            <h3>بيانات ولي الأمر والتواصل</h3>
-          </div>
-
-          <div class="grid-2">
-            <div class="input-box">
-              <label for="parentName">اسم ولي الاب <span>*</span></label>
-              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
-            </div>
-
-            <div class="input-box">
-              <label for="relation">صلة القرابة <span>*</span></label>
-              <select id="relation" required>
-                <option value="father">الأب</option>
-                <option value="mother">الأم</option>
-                <option value="other">وكيل شرعي / قريب</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="input-box">
-              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
-              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
-            </div>
-
-            <div class="input-box">
-              <label for="parentEmail">البريد الإلكتروني</label>
-              <input type="email" id="parentEmail" placeholder="example@domain.com">
-            </div>
-          </div>
-
- <div class="grid-2">
-            <div class="input-box">
-              <label for="parentName">اسم الام  <span>*</span></label>
-              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
-            </div>
-
-            <div class="input-box">
-              <label for="relation">صلة القرابة <span>*</span></label>
-              <select id="relation" required>
-                <option value="father">الأب</option>
-                <option value="mother">الأم</option>
-                <option value="other">وكيل شرعي / قريب</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="input-box">
-              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
-              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
-            </div>
-
-            <div class="input-box">
-              <label for="parentEmail">البريد الإلكتروني</label>
-              <input type="email" id="parentEmail" placeholder="example@domain.com">
-            </div>
-          </div>
-
-           <div class="grid-2">
-            <div class="input-box">
-              <label for="parentName">اسم وكيل الشرعي  <span>*</span></label>
-              <input type="text" id="parentName" placeholder="الاسم الكامل وكيل الشرعي " required>
-            </div>
-
-            <div class="input-box">
-              <label for="relation">صلة القرابة <span>*</span></label>
-              <select id="relation" required>
-                <option value="father">الأب</option>
-                <option value="mother">الأم</option>
-                <option value="other">وكيل شرعي / قريب</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="grid-2">
-            <div class="input-box">
-              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
-              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
-            </div>
-
-            <div class="input-box">
-              <label for="parentEmail">البريد الإلكتروني</label>
-              <input type="email" id="parentEmail" placeholder="example@domain.com">
-            </div>
-          </div>
-
-          
-          <div class="input-box">
-            <label for="notes">ملاحظات إضافية أو احتياجات خاصة للطالب</label>
-            <textarea id="notes" rows="3" placeholder="اكتب أي ملاحظات صحية أو تعليمية تود إخبارنا بها..."></textarea>
-          </div>
-        </div>
-
-        <!-- الموافقة وزر الإرسال -->
-        <div class="form-footer">
-          <label class="checkbox-label">
-            <input type="checkbox" required>
-            <span>أقر بصحة جميع البيانات المدخلة أعلاه وأوافق على سياسة القبول والتسجيل في المدرسة.</span>
-          </label>
-
-          <button type="submit" class="btn-register">إرسال طلب التسجيل</button>
-        </div>
-
-      </form>
+  <!-- هيدر اللوحة -->
+  <header class="dashboard-header">
+    <div class="dash-nav-container">
+      <h2>بوابة الطالب - مدرسة الريان</h2>
+      <a href="portal.html" class="logout-btn">تسجيل الخروج</a>
     </div>
-  </section>
+  </header>
+
+  <!-- محتوى لوحة الطالب -->
+  <main class="dashboard-container">
+    
+    <!-- بطاقة الترحيب واختيار المرحلة -->
+    <div class="welcome-card flex-welcome">
+      <div>
+        <h3>مرحباً بك في لوحة المتابعة الأكاديمية</h3>
+        <p>اختر مرحلتك الدراسية لعرض الجدول والمواد المقررة:</p>
+      </div>
+      
+      <!-- قائمة التبديل بين المراحل -->
+      <div class="stage-selector">
+        <label for="stageSelect">المرحلة الدراسية:</label>
+        <select id="stageSelect" onchange="changeStageData()">
+          <option value="primary">المرحلة الابتدائية</option>
+          <option value="middle" selected>المرحلة المتوسطة</option>
+          <option value="high">المرحلة الثانوية</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- قسم الجدول الدراسي -->
+    <section class="dash-section">
+      <h3 id="scheduleTitle">📅 الجدول الدراسي الأسبوعي - المرحلة المتوسطة</h3>
+      <div class="table-responsive">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>اليوم</th>
+              <th>الحصة الأولى</th>
+              <th>الحصة الثانية</th>
+              <th>الحصة الثالثة</th>
+              <th>الحصة الرابعة</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody">
+            <!-- يتم تعبئته تلقائياً بالجافاسكريبت حسب المرحلة -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- قسم الدرجات -->
+    <section class="dash-section">
+      <h3 id="gradesTitle">📊 درجات أعمال السنة والامتحانات - المرحلة المتوسطة</h3>
+      <div class="table-responsive">
+        <table class="schedule-table">
+          <thead>
+            <tr>
+              <th>المادة الدراسية</th>
+              <th>أعمال السنة (40)</th>
+              <th>الاختبار النهائي (60)</th>
+              <th>المجموع الكلي (100)</th>
+              <th>التقدير</th>
+            </tr>
+          </thead>
+          <tbody id="gradesBody">
+            <!-- يتم تعبئته تلقائياً بالجافاسكريبت حسب المرحلة -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- كود الجافاسكريبت لتبديل المواد والجدول حسب المرحلة -->
+  <script>
+    const stagesData = {
+      primary: {
+        name: "المرحلة الابتدائية",
+        schedule: [
+          ["الأحد", "لغتي الجميلة", "الرياضيات", "القرآن الكريم", "التربية الفنية"],
+          ["الإثنين", "الرياضيات", "العلوم", "اللغة الإنجليزية", "التربية البدنية"],
+          ["الثلاثاء", "لغتي الجميلة", "الدراسات الإسلامية", "المهارات الحياتية", "الرياضيات"]
+        ],
+        grades: [
+          ["لغتي الجميلة", "39", "58", "97", "ممتاز 🌟"],
+          ["الرياضيات", "37", "56", "93", "ممتاز 🌟"],
+          ["العلوم", "40", "59", "99", "ممتاز 🌟"]
+        ]
+      },
+      middle: {
+        name: "المرحلة المتوسطة",
+        schedule: [
+          ["الأحد", "الرياضيات", "لغتي الخالدة", "العلوم", "اللغة الإنجليزية"],
+          ["الإثنين", "المهارات الرقمية", "الرياضيات", "الدراسات الاجتماعية", "العلوم"],
+          ["الثلاثاء", "اللغة الإنجليزية", "الدراسات الإسلامية", "لغتي الخالدة", "التفكير الناقد"]
+        ],
+        grades: [
+          ["الرياضيات", "38", "57", "95", "ممتاز 🌟"],
+          ["العلوم", "39", "58", "97", "ممتاز 🌟"],
+          ["المهارات الرقمية", "40", "59", "99", "ممتاز 🌟"]
+        ]
+      },
+      high: {
+        name: "المرحلة الثانوية",
+        schedule: [
+          ["الأحد", "الفيزياء", "الرياضيات المتقدمة", "الكيمياء", "اللغة الإنجليزية"],
+          ["الإثنين", "الأحياء", "علم البيانات والذكاء الاصطناعي", "الفيزياء", "الكفايات اللغوية"],
+          ["الثلاثاء", "الرياضيات المتقدمة", "الكيمياء", "التقنية الرقمية", "قدرات وتحصيلي"]
+        ],
+        grades: [
+          ["الرياضيات المتقدمة", "37", "56", "93", "ممتاز 🌟"],
+          ["الفيزياء", "38", "58", "96", "ممتاز 🌟"],
+          ["علم البيانات والذكاء الاصطناعي", "40", "60", "100", "ممتاز 🌟"]
+        ]
+      }
+    };
+
+    function changeStageData() {
+      const selected = document.getElementById("stageSelect").value;
+      const data = stagesData[selected];
+
+      // تحديث العناوين
+      document.getElementById("scheduleTitle").innerText = `📅 الجدول الدراسي الأسبوعي - ${data.name}`;
+      document.getElementById("gradesTitle").innerText = `📊 درجات أعمال السنة والامتحانات - ${data.name}`;
+
+      // تحديث الجدول الدراسي
+      const scheduleBody = document.getElementById("scheduleBody");
+      scheduleBody.innerHTML = data.schedule.map(row => 
+        `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+      ).join('');
+
+      // تحديث جدول الدرجات
+      const gradesBody = document.getElementById("gradesBody");
+      gradesBody.innerHTML = data.grades.map(row => 
+        `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+      ).join('');
+    }
+
+    // تشغيل الدالة عند فتح الصفحة لأول مرة
+    window.onload = changeStageData;
+  </script>
 
 </body>
 </html>
