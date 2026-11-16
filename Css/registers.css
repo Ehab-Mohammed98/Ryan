@@ -1,0 +1,232 @@
+:root {
+  --navy-dark: #071727;
+  --navy-primary: #0A2540;
+  --teal-accent: #0D9488;
+  --bg-body: #F4F6F9;
+  --text-dark: #1E293B;
+  --text-muted: #64748B;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Cairo', sans-serif;
+  background-color: var(--bg-body);
+  color: var(--text-dark);
+  direction: rtl;
+  padding: 40px 20px;
+}
+
+.reg-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(10, 37, 64, 0.08);
+  overflow: hidden;
+}
+
+.reg-header {
+  position: relative;
+  background-color: var(--navy-dark);
+  color: #ffffff;
+  padding: 45px 35px 40px;
+  text-align: center;
+  border-bottom: 4px solid var(--teal-accent);
+}
+
+.top-back-link {
+  position: absolute;
+  top: 20px;
+  left: 25px;
+  color: #CBD5E1;
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 700;
+  transition: color 0.3s;
+}
+
+.top-back-link:hover {
+  color: #2DD4BF;
+}
+
+.reg-badge {
+  display: inline-block;
+  background-color: rgba(13, 148, 136, 0.2);
+  color: #2DD4BF;
+  border: 1px solid rgba(45, 212, 191, 0.4);
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.reg-header h2 {
+  font-size: 1.85rem;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.reg-header p {
+  color: #94A3B8;
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.reg-form {
+  padding: 40px 35px;
+}
+
+.form-block {
+  margin-bottom: 35px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.form-block:last-of-type {
+  border-bottom: none;
+  margin-bottom: 15px;
+}
+
+.block-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.step-num {
+  width: 32px;
+  height: 32px;
+  background-color: var(--teal-accent);
+  color: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.95rem;
+}
+
+.block-title h3 {
+  color: var(--navy-primary);
+  font-size: 1.25rem;
+  font-weight: 800;
+}
+
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.input-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.input-box label {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+.input-box label span {
+  color: #EF4444;
+}
+
+.input-box input,
+.input-box select,
+.input-box textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  color: var(--text-dark);
+  background-color: #F8FAFC;
+  transition: all 0.3s ease;
+}
+
+.input-box input:focus,
+.input-box select:focus,
+.input-box textarea:focus {
+  outline: none;
+  border-color: var(--teal-accent);
+  background-color: #ffffff;
+  box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.15);
+}
+
+.form-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.checkbox-label input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--teal-accent);
+  cursor: pointer;
+}
+
+.btn-register {
+  width: 100%;
+  background-color: var(--teal-accent);
+  color: #ffffff;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 6px 20px rgba(13, 148, 136, 0.25);
+}
+
+.btn-register:hover {
+  background-color: var(--navy-primary);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 768px) {
+  .grid-2,
+  .grid-3 {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .reg-form {
+    padding: 30px 20px;
+  }
+  .top-back-link {
+    position: static;
+    display: inline-block;
+    margin-bottom: 15px;
+  }
+}
