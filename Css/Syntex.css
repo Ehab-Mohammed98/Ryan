@@ -774,7 +774,9 @@ container {
   margin-bottom: 2px;
   color: #ffffff;
 }
-
+.info-row h4{
+  color:#000000;
+} 
 .info-row span,
 .info-row h4,
 .info-row a {
