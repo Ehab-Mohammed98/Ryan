@@ -56,8 +56,8 @@
               <label for="gender">الجنس <span>*</span></label>
               <select id="gender" required>
                 <option value="" disabled selected>اختر...</option>
-                <option value="male">بنين</option>
-                <option value="female">بنات</option>
+                <option value="male">ذكر</option>
+                <option value="female">أنثي</option>
               </select>
             </div>
           </div>
@@ -109,25 +109,9 @@
             <h3>بيانات ولي الأمر والتواصل</h3>
           </div>
 
-   <div class="grid-2">
-            <div class="input-box">
-              <label for="parentName">اسم ولي الأمر <span>*</span></label>
-              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
-            </div>
-
-            <div class="input-box">
-              <label for="relation">صلة القرابة <span>*</span></label>
-              <select id="relation" required>
-                <option value="father">الأب</option>
-                <option value="mother">الأم</option>
-                <option value="other">وكيل شرعي / قريب</option>
-              </select>
-            </div>
-          </div>
-          
           <div class="grid-2">
             <div class="input-box">
-              <label for="parentName">اسم ولي الأمر <span>*</span></label>
+              <label for="parentName">اسم ولي الاب <span>*</span></label>
               <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
             </div>
 
@@ -141,53 +125,70 @@
             </div>
           </div>
 
-           <div class="grid-2">
+          <div class="grid-2">
             <div class="input-box">
-              <label for="parentName">اسم ولي الأمر <span>*</span></label>
+              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
+              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
+            </div>
+
+            <div class="input-box">
+              <label for="parentEmail">البريد الإلكتروني</label>
+              <input type="email" id="parentEmail" placeholder="example@domain.com">
+            </div>
+          </div>
+
+ <div class="grid-2">
+            <div class="input-box">
+              <label for="parentName">اسم الام  <span>*</span></label>
               <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
             </div>
 
-       <div class="input-box">
+            <div class="input-box">
               <label for="relation">صلة القرابة <span>*</span></label>
               <select id="relation" required>
+                <option value="father">الأب</option>
                 <option value="mother">الأم</option>
                 <option value="other">وكيل شرعي / قريب</option>
               </select>
             </div>
           </div>
-          
+
           <div class="grid-2">
             <div class="input-box">
-              <label for="mobile">رقم الجوال الاب  <span>*</span></label>
+              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
               <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
             </div>
 
             <div class="input-box">
-              <label for="parentEmail">الاب البريد الإلكتروني</label>
-              <input type="email" id="parentEmail" placeholder="example@domain.com">
-            </div>
-          </div>
-
-        <div class="grid-2">
-            <div class="input-box">
-              <label for="mobile">رقم الجوال الام  <span>*</span></label>
-              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
-            </div>
-
-            <div class="input-box">
-              <label for="parentEmail">الام  البريد الإلكتروني</label>
+              <label for="parentEmail">البريد الإلكتروني</label>
               <input type="email" id="parentEmail" placeholder="example@domain.com">
             </div>
           </div>
 
            <div class="grid-2">
             <div class="input-box">
-              <label for="mobile">رقم الجوال الوكيل الشرعي   <span>*</span></label>
+              <label for="parentName">اسم وكيل الشرعي  <span>*</span></label>
+              <input type="text" id="parentName" placeholder="الاسم الكامل وكيل الشرعي " required>
+            </div>
+
+            <div class="input-box">
+              <label for="relation">صلة القرابة <span>*</span></label>
+              <select id="relation" required>
+                <option value="father">الأب</option>
+                <option value="mother">الأم</option>
+                <option value="other">وكيل شرعي / قريب</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="input-box">
+              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
               <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
             </div>
 
             <div class="input-box">
-              <label for="parentEmail"> الوكيل الشرعي الاب البريد الإلكتروني</label>
+              <label for="parentEmail">البريد الإلكتروني</label>
               <input type="email" id="parentEmail" placeholder="example@domain.com">
             </div>
           </div>
@@ -199,7 +200,6 @@
           </div>
         </div>
 
-        
         <!-- الموافقة وزر الإرسال -->
         <div class="form-footer">
           <label class="checkbox-label">
