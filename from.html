@@ -109,6 +109,22 @@
             <h3>بيانات ولي الأمر والتواصل</h3>
           </div>
 
+   <div class="grid-2">
+            <div class="input-box">
+              <label for="parentName">اسم ولي الأمر <span>*</span></label>
+              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
+            </div>
+
+            <div class="input-box">
+              <label for="relation">صلة القرابة <span>*</span></label>
+              <select id="relation" required>
+                <option value="father">الأب</option>
+                <option value="mother">الأم</option>
+                <option value="other">وكيل شرعي / قريب</option>
+              </select>
+            </div>
+          </div>
+          
           <div class="grid-2">
             <div class="input-box">
               <label for="parentName">اسم ولي الأمر <span>*</span></label>
@@ -125,10 +141,15 @@
             </div>
           </div>
 
-  <div class="input-box">
+           <div class="grid-2">
+            <div class="input-box">
+              <label for="parentName">اسم ولي الأمر <span>*</span></label>
+              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
+            </div>
+
+       <div class="input-box">
               <label for="relation">صلة القرابة <span>*</span></label>
               <select id="relation" required>
-
                 <option value="mother">الأم</option>
                 <option value="other">وكيل شرعي / قريب</option>
               </select>
@@ -137,16 +158,41 @@
           
           <div class="grid-2">
             <div class="input-box">
-              <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
+              <label for="mobile">رقم الجوال الاب  <span>*</span></label>
               <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
             </div>
 
             <div class="input-box">
-              <label for="parentEmail">البريد الإلكتروني</label>
+              <label for="parentEmail">الاب البريد الإلكتروني</label>
               <input type="email" id="parentEmail" placeholder="example@domain.com">
             </div>
           </div>
 
+        <div class="grid-2">
+            <div class="input-box">
+              <label for="mobile">رقم الجوال الام  <span>*</span></label>
+              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
+            </div>
+
+            <div class="input-box">
+              <label for="parentEmail">الام  البريد الإلكتروني</label>
+              <input type="email" id="parentEmail" placeholder="example@domain.com">
+            </div>
+          </div>
+
+           <div class="grid-2">
+            <div class="input-box">
+              <label for="mobile">رقم الجوال الوكيل الشرعي   <span>*</span></label>
+              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
+            </div>
+
+            <div class="input-box">
+              <label for="parentEmail"> الوكيل الشرعي الاب البريد الإلكتروني</label>
+              <input type="email" id="parentEmail" placeholder="example@domain.com">
+            </div>
+          </div>
+
+          
           <div class="input-box">
             <label for="notes">ملاحظات إضافية أو احتياجات خاصة للطالب</label>
             <textarea id="notes" rows="3" placeholder="اكتب أي ملاحظات صحية أو تعليمية تود إخبارنا بها..."></textarea>
