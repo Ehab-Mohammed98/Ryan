@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/62edd5cf92.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="Css/Syntex.css">
-    <title>Ryan School</title>
+    <title>مدرسة الريان | Ryan School</title>
 </head>
 <body>
-    <!--Start header-->
+
+<!-- Start Header -->
 <header class="main-header">
   <div class="header-container">
-    <!-- 1. الشعار (أيقونة بحجم مضبوط + نص) -->
     <a href="#" class="header-logo">
       <div class="logo-icon-box">
-        <!-- إذا كنت تستخدم صورة ضع: <img src="مسار_صورتك.png" alt="شعار الريان"> -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
         </svg>
@@ -24,151 +24,142 @@
       <span class="logo-title">مدرسة الريان</span>
     </a>
 
-    <!-- 2. قائمة الروابط -->
     <nav class="header-nav">
       <a href="#" class="active">الرئيسية</a>
       <a href="#cardgr">عن المدرسة</a>
-      <a href="#cardgrid">المراحل الدراسية</a>
+      <a href="#stages">المراحل الدراسية</a>
       <a href="#contact">تواصل معنا</a>
     </nav>
 
-    <!-- 3. أزرار الإجراءات -->
     <div class="header-buttons">
       <a href="portal.html" class="btn-navy">بوابة الطلاب</a>
       <a href="register.html" class="btn-teal">تسجيل جديد</a>
     </div>
-
   </div>
 </header>
-    <!--End header-->
-    <!--Start main-->
-<secation class="main">
-    <div> 
-      <h2>  مرحبا بكم في مدرسة الريان </h2>
-        <h3></h3>
-        <a href="from.html" calss="btn-tealss" id="#"> تسجيل الطلاب </a>
+<!-- End Header -->
+
+<!-- Start Main (Hero Section) -->
+<section class="main">
+    <div class="main-content"> 
+      <h2>مرحباً بكم في مدرسة الريان</h2>
+      <p>نصنع جيلاً مبدعاً ومبتكراً في بيئة تعليمية ذكية تواكب تطلعات المستقبل.</p>
+      <a href="register.html" class="btn-tealss">تسجيل الطلاب</a>
     </div>
-</secation>
-<!--End main-->
-<!-- Start container card -->
-    <div class="container" id="cardgr">
-    
-    <!-- القسم الأول: بطاقات المزايا الثلاثة -->
-    <div class="section-header">
-      <h2>لماذا تختار مدرسة الريان؟</h2>
-      <div class="line"></div>
-    </div>
+</section>
+<!-- End Main -->
 
-    <div class="cards-grid" id="cardgrid">
-      <!-- بطاقة 1: بيئة تعليمية -->
-      <div class="card">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/>
-          </svg>
-        </div>
-        <h3 class="card-title">بيئة تعليمية متطورة</h3>
-        <p class="card-desc">فصول الذكاء الاصطناعي والمختبرات المجهزة بأحدث التقنيات التفاعلية لتوفير بيئة تحفيزية آمنة تضمن التفوق والابتكار.</p>
-        <div class="card-footer">
-          <span>🛡️ بيئة آمنة</span>
-          <span>⚙️ تقنيات حديثة</span>
-        </div>
+<!-- Start Container Card -->
+<div class="container" id="cardgr">
+  
+  <!-- القسم الأول: بطاقات المزايا الثلاثة -->
+  <div class="section-header">
+    <h2>لماذا تختار مدرسة الريان؟</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="cards-grid" id="cardgrid">
+    <!-- بطاقة 1 -->
+    <div class="card">
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3zm0 2.84L18 11v7h-2v-6H8v6H6v-7l6-5.16z"/>
+        </svg>
       </div>
-
-      <!-- بطاقة 2: أنشطة إثرائية (البارزة) -->
-      <div class="card featured">
-        <span class="badge">شامل ومتميز</span>
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V18H8v2h8v-2h-3v-2.1c2.22-.49 3.93-2.22 4.39-4.54C19.08 10.84 21 8.76 21 6.2V5c0-1.1-.9-2-2-2z"/>
-          </svg>
-        </div>
-        <h3 class="card-title">أنشطة إثرائية متميزة</h3>
-        <p class="card-desc">برامج لا صفية متكاملة تشمل الابتكار الرقمي، الأندية الرياضية، والقيادة الاجتماعية لتنمية كافة جوانب شخصية الطالب.</p>
-        <div class="card-footer">
-          <span>⚽ أندية رياضية</span>
-          <span>🤖 روبوت وذكاء اصطناعي</span>
-        </div>
-      </div>
-
-      <!-- بطاقة 3: كادر متميز -->
-      <div class="card">
-        <div class="icon-wrapper">
-          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-          </svg>
-        </div>
-        <h3 class="card-title">كادر تعليمي متميز</h3>
-        <p class="card-desc">نخبة من المعلمين والموجهين ذوي الخبرات الأكاديمية العالية والتأهيل المستمر لبناء مهارات التفكير النقدي والإبداع.</p>
-        <div class="card-footer">
-          <span>🎓 خبرات +15 عاماً</span>
-          <span>📋 متابعة مستمرة</span>
-        </div>
+      <h3 class="card-title">بيئة تعليمية متطورة</h3>
+      <p class="card-desc">فصول الذكاء الاصطناعي والمختبرات المجهزة بأحدث التقنيات التفاعلية لتوفير بيئة تحفيزية آمنة تضمن التفوق والابتكار.</p>
+      <div class="card-footer">
+        <span>🛡️ بيئة آمنة</span>
+        <span>⚙️ تقنيات حديثة</span>
       </div>
     </div>
 
-    <!-- القسم الثاني والثالث: صورة المعمل + الرسم البياني التفاعلي -->
-    <div class="showcase-grid">
-      
-      <!-- 2. صورة لطلاب المدرسة داخل معمل -->
-      <div class="lab-image-card">
-        <div class="lab-image-wrapper">
-          <!-- يمكنك استبدال رابط الصورة بصورة المدرسة الخاصة بك -->
-          <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80" alt="طلاب مدرسة الريان في معمل الروبوت والعلوم">
-          <span class="image-tag">معمل المستقبل والابتكار</span>
-        </div>
-        <div class="lab-image-caption">
-          <h3>التعلم بالتجربة والابتكار العملي</h3>
-          <p>نحرص في مدرسة الريان على دمج الجانب النظري بالتطبيق العملي داخل معامل مجهزة بأحدث أجهزة المحاكاة والروبوت.</p>
-        </div>
+    <!-- بطاقة 2 (البارزة) -->
+    <div class="card featured">
+      <span class="badge">شامل ومتميز</span>
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 5h-2V3H7v2H5c-1.1 0-2 .9-2 2v1c0 2.55 1.92 4.63 4.39 4.94A5.01 5.01 0 0011 15.9V18H8v2h8v-2h-3v-2.1c2.22-.49 3.93-2.22 4.39-4.54C19.08 10.84 21 8.76 21 6.2V5c0-1.1-.9-2-2-2z"/>
+        </svg>
       </div>
-
-      <!-- 3. رسم بياني تفاعلي (Chart.js) -->
-      <div class="chart-card">
-        <div class="chart-header">
-          <h3>مؤشرات الإنجاز والتميز</h3>
-          <div class="chart-controls">
-            <button class="toggle-btn active" onclick="updateChartType('bar', this)">مخطط شريطي</button>
-            <button class="toggle-btn" onclick="updateChartType('doughnut', this)">مخطط دائري</button>
-          </div>
-        </div>
-
-        <div class="chart-canvas-container">
-          <canvas id="schoolStatsChart"></canvas>
-        </div>
-
-        <div class="stats-summary">
-          <div class="stat-item">
-            <span class="num">98%</span>
-            <span class="lbl">نسبة التفوق</span>
-          </div>
-          <div class="stat-item">
-            <span class="num">+45</span>
-            <span class="lbl">نشاط وبرنامج</span>
-          </div>
-          <div class="stat-item">
-            <span class="num">+15</span>
-            <span class="lbl">سنة خبرة</span>
-          </div>
-        </div>
+      <h3 class="card-title">أنشطة إثرائية متميزة</h3>
+      <p class="card-desc">برامج لا صفية متكاملة تشمل الابتكار الرقمي، الأندية الرياضية، والقيادة الاجتماعية لتنمية كافة جوانب شخصية الطالب.</p>
+      <div class="card-footer">
+        <span>⚽ أندية رياضية</span>
+        <span>🤖 روبوت وذكاء اصطناعي</span>
       </div>
+    </div>
 
+    <!-- بطاقة 3 -->
+    <div class="card">
+      <div class="icon-wrapper">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <h3 class="card-title">كادر تعليمي متميز</h3>
+      <p class="card-desc">نخبة من المعلمين والموجهين ذوي الخبرات الأكاديمية العالية والتأهيل المستمر لبناء مهارات التفكير النقدي والإبداع.</p>
+      <div class="card-footer">
+        <span>🎓 خبرات +15 عاماً</span>
+        <span>📋 متابعة مستمرة</span>
+      </div>
     </div>
   </div>
-<!-- مراحل الدراسية-->
-<section class="stages-section">
+
+  <!-- القسم الثاني والثالث: صورة المعمل + الرسم البياني التفاعلي -->
+  <div class="showcase-grid">
+    <div class="lab-image-card">
+      <div class="lab-image-wrapper">
+        <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=900&q=80" alt="طلاب مدرسة الريان في معمل الروبوت والعلوم">
+        <span class="image-tag">معمل المستقبل والابتكار</span>
+      </div>
+      <div class="lab-image-caption">
+        <h3>التعلم بالتجربة والابتكار العملي</h3>
+        <p>نحرص في مدرسة الريان على دمج الجانب النظري بالتطبيق العملي داخل معامل مجهزة بأحدث أجهزة المحاكاة والروبوت.</p>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-header">
+        <h3>مؤشرات الإنجاز والتميز</h3>
+        <div class="chart-controls">
+          <button class="toggle-btn active" onclick="updateChartType('bar', this)">مخطط شريطي</button>
+          <button class="toggle-btn" onclick="updateChartType('doughnut', this)">مخطط دائري</button>
+        </div>
+      </div>
+
+      <div class="chart-canvas-container">
+        <canvas id="schoolStatsChart"></canvas>
+      </div>
+
+      <div class="stats-summary">
+        <div class="stat-item">
+          <span class="num">98%</span>
+          <span class="lbl">نسبة التفوق</span>
+        </div>
+        <div class="stat-item">
+          <span class="num">+45</span>
+          <span class="lbl">نشاط وبرنامج</span>
+        </div>
+        <div class="stat-item">
+          <span class="num">+15</span>
+          <span class="lbl">سنة خبرة</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- المراحل الدراسية -->
+<section class="stages-section" id="stages">
   <div class="stages-container">
-    
-    <!-- العنوان الرئيسي -->
     <div class="section-header">
       <h2>المراحل الدراسية</h2>
       <div class="line"></div>
       <p>نقدم بيئة تعليمية متكاملة ومصممة خصيصاً لتناسب كل مرحلة عمرية وتنمي قدرات الطلاب.</p>
     </div>
 
-    <!-- شبكة البطاقات -->
     <div class="stages-grid">
-      
       <!-- المرحلة الابتدائية -->
       <div class="stage-card">
         <div class="stage-icon">
@@ -181,10 +172,10 @@
           <li>✓ أنشطة لا صفية منمية للذكاء</li>
           <li>✓ متابعة سلوكية وأكاديمية دقيقة</li>
         </ul>
-        <a href="#" class="stage-btn">استكشف المرحلة</a>
+        <a href="register.html" class="stage-btn">استكشف المرحلة</a>
       </div>
 
-      <!-- المرحلة المتوسطة (مميزة) -->
+      <!-- المرحلة المتوسطة -->
       <div class="stage-card featured">
         <span class="badge">الأكثر إقبالاً</span>
         <div class="stage-icon">
@@ -197,7 +188,7 @@
           <li>✓ مشاريع روبوت وابتكار رقمي</li>
           <li>✓ أنشطة رياضية وقيادية متكاملة</li>
         </ul>
-        <a href="#" class="stage-btn">استكشف المرحلة</a>
+        <a href="register.html" class="stage-btn">استكشف المرحلة</a>
       </div>
 
       <!-- المرحلة الثانوية -->
@@ -212,28 +203,23 @@
           <li>✓ تأهيل لاختبارات القدرات والتحصيلي</li>
           <li>✓ شراكات وبرامج إرشاد مهني</li>
         </ul>
-        <a href="#" class="stage-btn">استكشف المرحلة</a>
+        <a href="register.html" class="stage-btn">استكشف المرحلة</a>
       </div>
-
     </div>
   </div>
 </section>
-<!-- نهاية مراحل الدراسية -->
-<!-- Strat Content -->
+
+<!-- Start Contact -->
 <section class="contact-section" id="contact">
   <div class="contact-container">
-    
-    <!-- Section Header -->
     <div class="section-header">
       <h2>تواصل معنا</h2>
       <div class="line"></div>
       <p>يسعدنا استقبال استفساراتكم وملاحظاتكم على مدار الساعة لتقديم أفضل تجربة تعليمية لأبنائكم.</p>
     </div>
 
-    <!-- Main Contact Grid -->
     <div class="contact-grid">
-      
-      <!-- Right Column: Direct Contact Info (Navy Card) -->
+      <!-- معلومات التواصل -->
       <div class="contact-info-box">
         <div class="info-top">
           <h3>معلومات التواصل المباشر</h3>
@@ -241,18 +227,16 @@
         </div>
 
         <div class="info-items">
-          <!-- Location -->
           <div class="info-row">
             <div class="icon-circle">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
             <div>
               <h4>العنوان</h4>
-              <span><a href="https://maps.app.goo.gl/vYsj3Agf8Th4Kpsm7"> الرياض، المملكة العربية السعودية </a> </span>
+              <span><a href="https://maps.app.goo.gl/vYsj3Agf8Th4Kpsm7" target="_blank">الرياض، المملكة العربية السعودية</a></span>
             </div>
           </div>
 
-          <!-- Phone & WhatsApp -->
           <div class="info-row">
             <div class="icon-circle">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -263,7 +247,6 @@
             </div>
           </div>
 
-          <!-- Email -->
           <div class="info-row">
             <div class="icon-circle">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
@@ -274,7 +257,6 @@
             </div>
           </div>
 
-          <!-- Working Hours -->
           <div class="info-row">
             <div class="icon-circle">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
@@ -287,7 +269,7 @@
         </div>
       </div>
 
-      <!-- Left Column: Message Form (White Card) -->
+      <!-- نموذج الرسائل -->
       <div class="contact-form-box">
         <h3>أرسل لنا رسالة</h3>
         <form action="#" method="POST">
@@ -325,35 +307,16 @@
           <button type="submit" class="btn-submit">إرسال الرسالة</button>
         </form>
       </div>
-        
     </div>
   </div>
 </section>
-<!-- End Content -->
-<!--Strat FOOTER-->
+<!-- End Contact -->
+
+<!-- Start Footer -->
 <footer class="footer">
-  <p class="footer-title">جميع الحقوق محفوظة لي  @ 2020 <span> .ايهاب ابواليمن </span></p>
-  <!--div class="social-icons">
-      <a href="#"><i class="fab fa-facebook-f"></i></a>
-      <a href="#"><i class="fab fa-x-twitter"></i></a>
-      <a href="#"><i class="fab fa-linkedin"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-</div-->
+  <p class="footer-title">جميع الحقوق محفوظة لمدرسة الريان © 2026 | تصميم وتطوير <span>إيهاب أبواليمن</span></p>
 </footer>
+
 <script src="Css/javascript1.js" defer></script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
