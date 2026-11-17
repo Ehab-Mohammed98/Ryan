@@ -4,10 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>عن المدرسة - مدرسة الريان</title>
-  <!-- استيراد خط القاهرة -->
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
-  <!-- ربط ملف الـ CSS العام أو استخدام التنسيق المدمج بالأسفل -->
-  <link rel="stylesheet" href="Css/Syntex.css">
   <style>
     :root {
       --navy-dark: #071727;
@@ -25,15 +22,22 @@
       padding: 0;
     }
 
+    html, body {
+      height: 100%;
+    }
+
     body {
       font-family: 'Cairo', sans-serif;
       background-color: var(--bg-body);
       color: var(--text-dark);
       direction: rtl;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
       line-height: 1.6;
     }
 
-    /* الهيدر العلوي الموحد للموقع */
+    /* الهيدر بعرض الشاشة الكامل */
     .main-header {
       width: 100%;
       background-color: #ffffff;
@@ -45,9 +49,9 @@
     }
 
     .header-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 12px 24px;
+      width: 100%;
+      max-width: 100%;
+      padding: 12px 40px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -82,7 +86,7 @@
     .header-nav {
       display: flex;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
     }
 
     .header-nav a {
@@ -117,25 +121,29 @@
     .btn-navy { background-color: var(--navy-primary); }
     .btn-teal { background-color: var(--teal-accent); }
 
-    /* قسم التعريف المتناسق (العمودين) */
+    /* قسم المحتوى بعرض كامل */
     .about-section {
-      max-width: 1100px;
-      margin: 60px auto;
-      padding: 0 20px;
+      width: 100%;
+      flex-grow: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 30px;
     }
 
     .about-card {
+      width: 100%;
+      max-width: 1350px; /* عرض واسع ومريح */
       background: #ffffff;
       border-radius: 24px;
-      padding: 50px 45px;
+      padding: 60px 50px;
       box-shadow: 0 15px 40px rgba(10, 37, 64, 0.06);
       display: grid;
-      grid-template-columns: 1fr 1.1fr; /* عمود للشعار وعمود للنص */
+      grid-template-columns: 1fr 1.2fr;
       align-items: center;
-      gap: 50px;
+      gap: 60px;
     }
 
-    /* عمود الشعار أو الأيقونة التعبيرية */
     .about-logo-side {
       display: flex;
       flex-direction: column;
@@ -143,14 +151,14 @@
       justify-content: center;
       background-color: #F8FAFC;
       border-radius: 20px;
-      padding: 40px 20px;
+      padding: 50px 20px;
       border: 1px dashed #E2E8F0;
       text-align: center;
     }
 
     .school-emblem {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       background-color: var(--teal-light);
       color: var(--teal-accent);
       border-radius: 50%;
@@ -163,17 +171,16 @@
 
     .about-logo-side h4 {
       color: var(--navy-primary);
-      font-size: 1.2rem;
+      font-size: 1.3rem;
       font-weight: 800;
       margin-bottom: 6px;
     }
 
     .about-logo-side p {
       color: var(--text-muted);
-      font-size: 0.88rem;
+      font-size: 0.9rem;
     }
 
-    /* عمود النصوص التعريفية */
     .about-text-side {
       text-align: right;
     }
@@ -183,55 +190,56 @@
       background-color: var(--teal-light);
       color: var(--teal-accent);
       font-weight: 700;
-      font-size: 0.85rem;
-      padding: 4px 14px;
+      font-size: 0.88rem;
+      padding: 6px 16px;
       border-radius: 20px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
     }
 
     .about-text-side h2 {
       color: var(--navy-primary);
-      font-size: 1.85rem;
+      font-size: 2.1rem;
       font-weight: 800;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
       line-height: 1.3;
     }
 
     .about-text-side p {
       color: var(--text-muted);
-      font-size: 0.98rem;
-      line-height: 1.8;
-      margin-bottom: 16px;
+      font-size: 1.02rem;
+      line-height: 1.9;
+      margin-bottom: 18px;
       text-align: justify;
     }
 
-    /* الفوتر */
+    /* الفوتر بعرض كامل في الأسفل */
     .footer {
+      width: 100%;
       background-color: var(--navy-primary);
       color: #ffffff;
       text-align: center;
-      padding: 22px 20px;
-      margin-top: 60px;
+      padding: 24px 20px;
     }
 
     .footer-title { font-size: 0.92rem; font-weight: 600; }
     .footer-title span { color: #2DD4BF; font-weight: 800; }
 
-    /* التجاوب مع الشاشات والهواتف */
-    @media (max-width: 850px) {
+    /* التجاوب مع الهواتف والشاشات الصغيرة */
+    @media (max-width: 900px) {
       .about-card {
         grid-template-columns: 1fr;
-        padding: 30px 20px;
+        padding: 35px 20px;
         gap: 30px;
       }
       .header-container {
         flex-direction: column;
         text-align: center;
+        padding: 12px 20px;
       }
       .header-nav {
         flex-wrap: wrap;
         justify-content: center;
-        gap: 12px;
+        gap: 14px;
       }
       .header-buttons {
         width: 100%;
@@ -268,14 +276,14 @@
   </div>
 </header>
 
-<!-- قسم عن المدرسة -->
+<!-- قسم عن المدرسة (ملاء كامل) -->
 <main class="about-section">
   <div class="about-card">
     
     <!-- الجانب الأيمن: الشعار أو الرمز -->
     <div class="about-logo-side">
       <div class="school-emblem">
-        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="currentColor">
+        <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 3L1 9l4 2.18v6L12 21l7-3.82v-6l2-1.09V17h2V9L12 3zm6.82 6L12 12.72 5.18 9 12 5.28 18.82 9zM17 15.99l-5 2.73-5-2.73v-3.72L12 15l5-2.73v3.72z"/>
         </svg>
       </div>
@@ -291,14 +299,14 @@
         تأسست مدرسة الريان لتكون صرحاً تعليمياً متميزاً يدمج بين الأصالة والمعاصرة. نهدف إلى بناء جيل واعٍ، مبدع، وقادر على مواجهة تحديات العصر الحديث عبر بيئة مدرسية آمنة ومحفزة على الابتكار والتفكير النقدي.
       </p>
       <p>
-        نعتمد أحدث البرامج الأكاديمية ونظم الذكاء الاصطناعي في التعليم، مع التركيز على بناء الشخصية المتكاملة للطلاب علمياً وسلوكياً ومهارياً بإشراف نخبة من كفاة الكوادر التعليمية.
+        نعتمد أحدث البرامج الأكاديمية ونظم الذكاء الاصطناعي في التعليم، مع التركيز على بناء الشخصية المتكاملة للطلاب علمياً وسلوكياً ومهارياً بإشراف نخبة من كفاءات الكوادر التعليمية.
       </p>
     </div>
 
   </div>
 </main>
 
-<!-- الفوتر -->
+<!-- الفوتر في أسفل الشاشة -->
 <footer class="footer">
   <p class="footer-title">جميع الحقوق محفوظة لمدرسة الريان © 2026 | تصميم وتطوير <span>إيهاب أبواليمن</span></p>
 </footer>
