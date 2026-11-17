@@ -1,32 +1,215 @@
-.flex-welcome {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 16px;
-}
+:root {
+      --navy-dark: #071727;
+      --navy-primary: #0A2540;
+      --teal-accent: #0D9488;
+      --teal-light: #E6F7F5;
+      --bg-body: #F4F6F9;
+      --text-dark: #1E293B;
+      --text-muted: #64748B;
+    }
 
-.stage-selector {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-.stage-selector label {
-  font-weight: 700;
-  color: var(--navy-primary);
-  font-size: 0.92rem;
-}
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-dark);
+      direction: rtl;
+      min-height: 100vh;
+    }
 
-.stage-selector select {
-  padding: 10px 16px;
-  border-radius: 10px;
-  border: 2px solid var(--teal-accent);
-  font-family: 'Cairo', sans-serif;
-  font-weight: 700;
-  font-size: 0.92rem;
-  color: var(--navy-primary);
-  background-color: #F8FAFC;
-  cursor: pointer;
-  outline: none;
-}
+    /* هيدر اللوحة */
+    .dashboard-header {
+      background-color: var(--navy-dark);
+      color: #ffffff;
+      padding: 18px 24px;
+      border-bottom: 4px solid var(--teal-accent);
+      box-shadow: 0 4px 12px rgba(7, 23, 39, 0.1);
+    }
+
+    .dash-nav-container {
+      max-width: 1150px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .dash-nav-container h2 {
+      font-size: 1.35rem;
+      font-weight: 800;
+    }
+
+    .logout-btn {
+      background-color: #EF4444;
+      color: #ffffff;
+      padding: 8px 18px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 700;
+      transition: all 0.2s ease;
+    }
+
+    .logout-btn:hover {
+      background-color: #DC2626;
+      transform: translateY(-2px);
+    }
+
+    /* حاوي المحتوى */
+    .dashboard-container {
+      max-width: 1150px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    /* بطاقة الترحيب واختيار المرحلة */
+    .welcome-card {
+      background: #ffffff;
+      padding: 26px 30px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(10, 37, 64, 0.05);
+      margin-bottom: 30px;
+      border-right: 6px solid var(--teal-accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .welcome-card h3 {
+      color: var(--navy-primary);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .welcome-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    .stage-selector {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background-color: #F8FAFC;
+      padding: 10px 16px;
+      border-radius: 12px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .stage-selector label {
+      font-weight: 700;
+      color: var(--navy-primary);
+      font-size: 0.92rem;
+    }
+
+    .stage-selector select {
+      padding: 8px 14px;
+      border-radius: 8px;
+      border: 2px solid var(--teal-accent);
+      font-family: inherit;
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--navy-primary);
+      background-color: #ffffff;
+      cursor: pointer;
+      outline: none;
+    }
+
+    /* أقسام الجداول */
+    .dash-section {
+      background: #ffffff;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 25px rgba(10, 37, 64, 0.05);
+      margin-bottom: 28px;
+    }
+
+    .dash-section h3 {
+      color: var(--navy-primary);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #F1F5F9;
+    }
+
+    .table-responsive {
+      width: 100%;
+      overflow-x: auto;
+      border-radius: 12px;
+      border: 1px solid #E2E8F0;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      min-width: 650px;
+    }
+
+    .schedule-table th, 
+    .schedule-table td {
+      padding: 14px 16px;
+      border-bottom: 1px solid #E2E8F0;
+      font-size: 0.94rem;
+    }
+
+    .schedule-table th {
+      background-color: var(--navy-primary);
+      color: #ffffff;
+      font-weight: 700;
+    }
+
+    .schedule-table tbody tr:nth-child(even) {
+      background-color: #F8FAFC;
+    }
+
+    .schedule-table tbody tr:hover {
+      background-color: var(--teal-light);
+    }
+
+    .schedule-table td {
+      color: var(--text-dark);
+      font-weight: 600;
+    }
+
+    .schedule-table td:first-child {
+      font-weight: 800;
+      color: var(--navy-primary);
+    }
+
+    /* شارة التقدير */
+    .grade-badge {
+      display: inline-block;
+      background-color: var(--teal-light);
+      color: var(--teal-accent);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.85rem;
+    }
+
+    /* التجاوب مع الشاشات الصغيرة */
+    @media (max-width: 768px) {
+      .dash-nav-container h2 {
+        font-size: 1.1rem;
+      }
+      .welcome-card {
+        padding: 20px;
+      }
+      .stage-selector {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .dash-section {
+        padding: 20px 16px;
+      }
+    }
