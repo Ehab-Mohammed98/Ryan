@@ -8,8 +8,7 @@
   <link rel="stylesheet" href="Css/registers.css">
 </head>
 <body>
-
-  <section class="registration-section">
+<section class="registration-section">
     <div class="reg-container">
       
       <div class="reg-header">
@@ -19,7 +18,7 @@
         <p>يرجى تعبئة البيانات بدقة، وسيقوم فريق القبول والتسجيل في مدرسة الريان بالتواصل معكم لإتمام الإجراءات.</p>
       </div>
 
-      <form class="reg-form" action="#" method="POST">
+      <form class="reg-form" id="registrationForm" action="#" method="POST">
         
         <!-- 1. بيانات الطالب -->
         <div class="form-block">
@@ -31,29 +30,29 @@
           <div class="grid-2">
             <div class="input-box">
               <label for="studentName">اسم الطالب الرباعي <span>*</span></label>
-              <input type="text" id="studentName" placeholder="أدخل اسم الطالب كاملاً" required>
+              <input type="text" id="studentName" name="studentName" placeholder="أدخل اسم الطالب كاملاً" required>
             </div>
 
             <div class="input-box">
               <label for="idNumber">رقم الهوية الوطنية / الإقامة <span>*</span></label>
-              <input type="text" id="idNumber" placeholder="10xxxxxxxx" maxlength="10" required>
+              <input type="text" id="idNumber" name="idNumber" placeholder="10xxxxxxxx" maxlength="10" required>
             </div>
           </div>
 
           <div class="grid-3">
             <div class="input-box">
               <label for="birthDate">تاريخ الميلاد <span>*</span></label>
-              <input type="date" id="birthDate" required>
+              <input type="date" id="birthDate" name="birthDate" required>
             </div>
 
             <div class="input-box">
               <label for="nationality">الجنسية <span>*</span></label>
-              <input type="text" id="nationality" placeholder="مثال: سعودي" required>
+              <input type="text" id="nationality" name="nationality" placeholder="مثال: سعودي" required>
             </div>
 
             <div class="input-box">
               <label for="gender">الجنس <span>*</span></label>
-              <select id="gender" required>
+              <select id="gender" name="gender" required>
                 <option value="" disabled selected>اختر...</option>
                 <option value="male">بنين</option>
                 <option value="female">بنات</option>
@@ -72,9 +71,9 @@
           <div class="grid-3">
             <div class="input-box">
               <label for="stage">المرحلة الدراسية <span>*</span></label>
-              <select id="stage" required>
+              <select id="stage" name="stage" required>
                 <option value="" disabled selected>اختر المرحلة...</option>
-                <option value="kg">رياض الأطفال (تمهيدي)</option>
+                <option value="kg">رياض الأطفال</option>
                 <option value="primary">المرحلة الابتدائية</option>
                 <option value="middle">المرحلة المتوسطة</option>
                 <option value="high">المرحلة الثانوية</option>
@@ -82,21 +81,15 @@
             </div>
 
             <div class="input-box">
-              <label for="grade">الصف الدراسي <span>*</span></label>
-              <select id="grade" required>
-                <option value="" disabled selected>اختر الصف...</option>
-                <option value="1">الصف الأول</option>
-                <option value="2">الصف الثاني</option>
-                <option value="3">الصف الثالث</option>
-                <option value="4">الصف الرابع</option>
-                <option value="5">الصف الخامس</option>
-                <option value="6">الصف السادس</option>
+              <label for="grade">الصف / المستوى الدراسي <span>*</span></label>
+              <select id="grade" name="grade" disabled required>
+                <option value="" disabled selected>اختر المرحلة أولاً...</option>
               </select>
             </div>
 
             <div class="input-box">
               <label for="prevSchool">المدرسة السابقة (إن وجدت)</label>
-              <input type="text" id="prevSchool" placeholder="اسم المدرسة السابقة">
+              <input type="text" id="prevSchool" name="prevSchool" placeholder="اسم المدرسة السابقة">
             </div>
           </div>
         </div>
@@ -111,12 +104,12 @@
           <div class="grid-2">
             <div class="input-box">
               <label for="parentName">اسم ولي الأمر <span>*</span></label>
-              <input type="text" id="parentName" placeholder="الاسم الكامل لولي الأمر" required>
+              <input type="text" id="parentName" name="parentName" placeholder="الاسم الكامل لولي الأمر" required>
             </div>
 
             <div class="input-box">
               <label for="relation">صلة القرابة <span>*</span></label>
-              <select id="relation" required>
+              <select id="relation" name="relation" required>
                 <option value="father">الأب</option>
                 <option value="mother">الأم</option>
                 <option value="other">وكيل شرعي / قريب</option>
@@ -127,18 +120,18 @@
           <div class="grid-2">
             <div class="input-box">
               <label for="mobile">رقم الجوال (واتساب) <span>*</span></label>
-              <input type="tel" id="mobile" placeholder="05xxxxxxxx" required>
+              <input type="tel" id="mobile" name="mobile" placeholder="05xxxxxxxx" required>
             </div>
 
             <div class="input-box">
               <label for="parentEmail">البريد الإلكتروني</label>
-              <input type="email" id="parentEmail" placeholder="example@domain.com">
+              <input type="email" id="parentEmail" name="parentEmail" placeholder="example@domain.com">
             </div>
           </div>
 
           <div class="input-box">
             <label for="notes">ملاحظات إضافية أو احتياجات خاصة للطالب</label>
-            <textarea id="notes" rows="3" placeholder="اكتب أي ملاحظات صحية أو تعليمية تود إخبارنا بها..."></textarea>
+            <textarea id="notes" name="notes" rows="3" placeholder="اكتب أي ملاحظات صحية أو تعليمية تود إخبارنا بها..."></textarea>
           </div>
         </div>
 
@@ -155,6 +148,6 @@
       </form>
     </div>
   </section>
-
+  <script src="Css/register.js"></script>
 </body>
 </html>
