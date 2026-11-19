@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>البوابة الأكاديمية | تسجيل الدخول ولوحة تحكم الطالب</title>
+  <!-- استيراد خط Tajawal العربي -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <!-- استيراد Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- استيراد أيقونات Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Tajawal', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              DEFAULT: '#0097a7',
+              hover: '#00838f',
+              light: '#e0f7fa',
+              soft: '#f0fbfc'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * {
+      font-family: 'Tajawal', sans-serif;
+    }
+    body {
+      background-color: #f8fafc;
+      color: #2d3139;
+    }
+    /* تخصيص شريط التمرير */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body class="min-h-screen antialiased selection:bg-[#0097a7] selection:text-white">
+
+  <!-- إشعار Toast مخصص بديل عن alert() -->
+  <div id="toast-container" class="fixed top-5 left-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- =========================================================
+       1. شاشة تسجيل الدخول وإعادة تعيين كلمة المرور
+  ========================================================== -->
+  <section id="auth-screen" class="min-h-screen bg-white flex flex-col justify-center items-center px-5 py-10">
+    <div class="w-full max-w-[440px] bg-white fade-in">
+      
+      <!-- شعار وهوية البوابة -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-[#e0f7fa] text-[#0097a7] mb-3 shadow-sm">
+          <i data-lucide="graduation-cap" class="w-8 h-8"></i>
+        </div>
+        <h1 class="text-2xl font-extrabold text-[#2d3139]">البوابة الأكاديمية للطلاب</h1>
+        <p id="auth-subtitle" class="text-sm text-[#7c8594] mt-1">سجّل دخولك للوصول إلى جدول الحصص والامتحانات</p>
+      </div>
+
+      <!-- نموذج تسجيل الدخول (مطابق لتصميم الصورة) -->
+      <form id="login-form" class="space-y-5" novalidate>
+        <div>
+          <label for="national-id" class="block text-[16px] font-bold text-[#2d3139] mb-2.5">
+            رقم الهوية / الرقم الأكاديمي
+          </label>
+          <input
+            type="text"
+            id="national-id"
+            class="w-full h-[54px] px-[18px] text-[16px] text-[#2d3139] bg-white border-[1.5px] border-[#e2e6ec] rounded-[10px] outline-none transition-all placeholder:text-[#9ba3af] placeholder:text-[15px] focus:border-[#0097a7] focus:ring-4 focus:ring-[#0097a7]/10"
+            placeholder="أدخل رقم الهوية"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="password" class="block text-[16px] font-bold text-[#2d3139] mb-2.5">
+            كلمة المرور
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="password"
+              class="w-full h-[54px] px-[18px] pl-12 text-[16px] text-[#2d3139] bg-white border-[1.5px] border-[#e2e6ec] rounded-[10px] outline-none transition-all placeholder:text-[#9ba3af] placeholder:text-[15px] focus:border-[#0097a7] focus:ring-4 focus:ring-[#0097a7]/10"
+              placeholder="•••••••••"
+              required
+            />
+            <button
+              type="button"
+              id="toggle-pass-btn"
+              aria-label="إظهار أو إخفاء كلمة المرور"
+              class="absolute inset-y-0 left-3 flex items-center text-[#9ba3af] hover:text-[#0097a7] transition-colors p-1"
+            >
+              <i data-lucide="eye" class="w-5 h-5"></i>
+            </button>
+          </div>
+        </div>
+
+        <!-- صف تذكرني ونسيت كلمة المرور -->
+        <div class="flex items-center justify-between pt-0.5 pb-1 text-[15px]">
+          <label class="inline-flex items-center gap-2 text-[#7c8594] cursor-pointer select-none">
+            <input
+              type="checkbox"
+              id="remember-me"
+              class="w-[17px] h-[17px] accent-[#0097a7] border-[1.5px] border-[#c5cbd3] rounded-[4px] cursor-pointer"
+            />
+            <span>تذكرني</span>
+          </label>
+
+          <button
+            type="button"
+            onclick="switchAuthView('reset')"
+            class="text-[#0097a7] font-bold hover:opacity-80 hover:underline transition-opacity cursor-pointer"
+          >
+            نسيت كلمة المرور؟
+          </button>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full h-[50px] bg-[#0097a7] hover:bg-[#00838f] active:scale-[0.99] text-white font-bold text-[16px] rounded-[10px] transition-all shadow-sm cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span>تسجيل الدخول</span>
+          <i data-lucide="arrow-left" class="w-5 h-5"></i>
+        </button>
+
+        <!-- تلميح دخول سريع للتجربة -->
+        <div class="pt-3 border-t border-slate-100 text-center">
+          <button
+            type="button"
+            onclick="fillDemoAccount()"
+            class="text-xs text-[#7c8594] hover:text-[#0097a7] transition-colors underline decoration-dotted cursor-pointer"
+          >
+            تعبئة بيانات طالب تجريبية للدخول السريع (44510289)
+          </button>
+        </div>
+      </form>
+
+      <!-- نموذج إعادة إنشاء كلمة المرور -->
+      <form id="reset-form" class="space-y-5 hidden fade-in" novalidate>
+        <div class="p-3.5 rounded-[10px] bg-[#f0fbfc] border border-[#b2ebf2] text-sm text-[#006064] leading-relaxed">
+          أدخل رقم الهوية أو الرقم الأكاديمي وأنشئ كلمة مرور جديدة لتتمكن من الدخول إلى حسابك مباشرة.
+        </div>
+
+        <div>
+          <label for="reset-id" class="block text-[16px] font-bold text-[#2d3139] mb-2.5">
+            رقم الهوية / الرقم الأكاديمي
+          </label>
+          <input
+            type="text"
+            id="reset-id"
+            class="w-full h-[54px] px-[18px] text-[16px] text-[#2d3139] bg-white border-[1.5px] border-[#e2e6ec] rounded-[10px] outline-none transition-all placeholder:text-[#9ba3af] focus:border-[#0097a7] focus:ring-4 focus:ring-[#0097a7]/10"
+            placeholder="أدخل رقم الهوية"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="new-password" class="block text-[16px] font-bold text-[#2d3139] mb-2.5">
+            كلمة المرور الجديدة
+          </label>
+          <input
+            type="password"
+            id="new-password"
+            class="w-full h-[54px] px-[18px] text-[16px] text-[#2d3139] bg-white border-[1.5px] border-[#e2e6ec] rounded-[10px] outline-none transition-all placeholder:text-[#9ba3af] focus:border-[#0097a7] focus:ring-4 focus:ring-[#0097a7]/10"
+            placeholder="أدخل كلمة المرور الجديدة (6 أحرف على الأقل)"
+            required
+          />
+        </div>
+
+        <div>
+          <label for="confirm-password" class="block text-[16px] font-bold text-[#2d3139] mb-2.5">
+            تأكيد كلمة المرور الجديدة
+          </label>
+          <input
+            type="password"
+            id="confirm-password"
+            class="w-full h-[54px] px-[18px] text-[16px] text-[#2d3139] bg-white border-[1.5px] border-[#e2e6ec] rounded-[10px] outline-none transition-all placeholder:text-[#9ba3af] focus:border-[#0097a7] focus:ring-4 focus:ring-[#0097a7]/10"
+            placeholder="أعد كتابة كلمة المرور الجديدة"
+            required
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="w-full h-[50px] bg-[#0097a7] hover:bg-[#00838f] text-white font-bold text-[16px] rounded-[10px] transition-colors shadow-sm cursor-pointer"
+        >
+          حفظ وإعادة إنشاء كلمة المرور
+        </button>
+
+        <div class="text-center pt-1">
+          <button
+            type="button"
+            onclick="switchAuthView('login')"
+            class="text-[#0097a7] font-bold text-[15px] hover:underline cursor-pointer"
+          >
+            العودة إلى تسجيل الدخول
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2. لوحة تحكم الطالب (Student Dashboard)
+  ========================================================== -->
+  <div id="dashboard-screen" class="hidden min-h-screen flex bg-[#f8fafc]">
+    
+    <!-- خلفية معتمة للقائمة الجانبية على الجوال -->
+    <div id="sidebar-backdrop" onclick="toggleMobileSidebar(false)" class="fixed inset-0 bg-slate-900/40 z-30 hidden lg:hidden backdrop-blur-xs"></div>
+
+    <!-- القائمة الجانبية (Sidebar) -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 right-0 z-40 w-72 bg-white border-l border-slate-200/80 flex flex-col justify-between transition-transform duration-300 translate-x-full lg:translate-x-0">
+      <div>
+        <!-- رأس القائمة الجانبية -->
+        <div class="h-20 px-6 flex items-center justify-between border-b border-slate-100">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#0097a7] text-white flex items-center justify-center shadow-sm">
+              <i data-lucide="graduation-cap" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="font-extrabold text-base text-[#2d3139] leading-tight">منصة الطالب</h2>
+              <span class="text-xs text-[#7c8594]">الفصل الدراسي الأول</span>
+            </div>
+          </div>
+          <button onclick="toggleMobileSidebar(false)" class="lg:hidden p-2 text-slate-400 hover:text-slate-600 rounded-lg">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- بطاقة تعريف الطالب في القائمة -->
+        <div class="p-4 mx-4 mt-5 rounded-2xl bg-slate-50 border border-slate-100">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-[#e0f7fa] text-[#0097a7] font-extrabold flex items-center justify-center text-lg shrink-0">
+              ط
+            </div>
+            <div class="min-w-0">
+              <p id="sidebar-student-name" class="font-bold text-sm text-[#2d3139] truncate">عبدالله محمد العتيبي</p>
+              <p class="text-xs text-[#7c8594] mt-0.5">الرقم الأكاديمي: <span id="sidebar-student-id" class="font-bold text-[#0097a7]">44510289</span></p>
+            </div>
+          </div>
+          <div class="mt-3 pt-2.5 border-t border-slate-200/70 flex items-center justify-between text-xs text-[#7c8594]">
+            <span>علوم الحاسب - المستوى 5</span>
+            <span class="inline-flex items-center gap-1 text-emerald-600 font-bold">
+              <span class="w-2 h-2 rounded-full bg-emerald-500"></span> منتظم
+            </span>
+          </div>
+        </div>
+
+        <!-- روابط التنقل -->
+        <nav class="px-4 mt-6 space-y-1.5" aria-label="القائمة الرئيسية">
+          <button onclick="switchTab('overview')" data-tab="overview" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold transition-all bg-[#e0f7fa] text-[#0097a7]">
+            <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
+            <span>نظرة عامة</span>
+          </button>
+
+          <button onclick="switchTab('schedule')" data-tab="schedule" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-[#5a6270] hover:bg-slate-50 transition-all">
+            <i data-lucide="calendar-days" class="w-5 h-5"></i>
+            <span>جدول الحصص</span>
+          </button>
+
+          <button onclick="switchTab('exams')" data-tab="exams" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-[#5a6270] hover:bg-slate-50 transition-all">
+            <span class="flex items-center gap-3">
+              <i data-lucide="file-clock" class="w-5 h-5"></i>
+              <span>جدول الامتحانات</span>
+            </span>
+            <span class="px-2 py-0.5 text-xs rounded-full bg-amber-100 text-amber-700 font-bold">4</span>
+          </button>
+
+          <button onclick="switchTab('assignments')" data-tab="assignments" class="nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-[#5a6270] hover:bg-slate-50 transition-all">
+            <span class="flex items-center gap-3">
+              <i data-lucide="book-open-check" class="w-5 h-5"></i>
+              <span>الواجبات والدرجات</span>
+            </span>
+            <span class="px-2 py-0.5 text-xs rounded-full bg-[#e0f7fa] text-[#0097a7] font-bold">2</span>
+          </button>
+
+          <button onclick="switchTab('announcements')" data-tab="announcements" class="nav-btn w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-[#5a6270] hover:bg-slate-50 transition-all">
+            <i data-lucide="megaphone" class="w-5 h-5"></i>
+            <span>الإعلانات الأكاديمية</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- زر تسجيل الخروج -->
+      <div class="p-4 border-t border-slate-100">
+        <button
+          onclick="logoutStudent()"
+          class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-sm font-bold text-rose-600 bg-rose-50/70 hover:bg-rose-100 transition-colors cursor-pointer"
+        >
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>تسجيل الخروج</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="flex-1 flex flex-col min-w-0">
+      
+      <!-- الشريط العلوي (Topbar) -->
+      <header class="h-20 bg-white border-b border-slate-200/80 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
+        <div class="flex items-center gap-3">
+          <button
+            onclick="toggleMobileSidebar(true)"
+            aria-label="فتح القائمة"
+            class="lg:hidden p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div>
+            <h1 id="topbar-title" class="text-lg sm:text-xl font-extrabold text-[#2d3139]">مرحباً بك، عبدالله 👋</h1>
+            <p id="current-date-display" class="text-xs text-[#7c8594] hidden sm:block">الأسبوع الدراسي الحادي عشر</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <!-- زر الإشعارات -->
+          <div class="relative">
+            <button
+              id="notif-btn"
+              onclick="toggleNotifications()"
+              aria-label="الإشعارات"
+              class="relative p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 transition-colors cursor-pointer"
+            >
+              <i data-lucide="bell" class="w-5 h-5"></i>
+              <span class="absolute top-2 right-2 w-2 h-2 rounded-full bg-rose-500"></span>
+            </button>
+
+            <!-- قائمة الإشعارات المنسدلة -->
+            <div id="notif-dropdown" class="hidden absolute left-0 mt-2 w-80 bg-white rounded-2xl shadow-xl border border-slate-100 p-4 z-30 fade-in">
+              <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                <span class="font-bold text-sm text-[#2d3139]">الإشعارات الحديثة</span>
+                <span class="text-xs text-[#0097a7] font-bold">3 جديدة</span>
+              </div>
+              <div class="divide-y divide-slate-100 max-h-64 overflow-y-auto">
+                <div class="py-3">
+                  <p class="text-xs font-bold text-[#2d3139]">تذكير بموعد الامتحان النصفي</p>
+                  <p class="text-xs text-[#7c8594] mt-0.5">امتحان قواعد البيانات بعد 3 أيام في قاعة 204.</p>
+                </div>
+                <div class="py-3">
+                  <p class="text-xs font-bold text-[#2d3139]">تم رصد درجة الواجب الثاني</p>
+                  <p class="text-xs text-[#7c8594] mt-0.5">حصلت على 9.5 / 10 في مقرر هياكل البيانات.</p>
+                </div>
+                <div class="py-3">
+                  <p class="text-xs font-bold text-[#2d3139]">تغيير قاعة محاضرة الغد</p>
+                  <p class="text-xs text-[#7c8594] mt-0.5">نُقلت محاضرة الشبكات إلى معمل الحاسب 3.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- شارة الرقم الأكاديمي -->
+          <div class="hidden sm:flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#f0fbfc] border border-[#b2ebf2] text-xs font-bold text-[#0097a7]">
+            <i data-lucide="id-card" class="w-4 h-4"></i>
+            <span id="topbar-student-id">44510289</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- منطقة العرض المتغيرة حسب التبويب -->
+      <main class="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- =====================================================
+             تبويب 1: نظرة عامة (Overview)
+        ====================================================== -->
+        <div id="tab-overview" class="tab-content space-y-6 fade-in">
+          
+          <!-- بطاقات الملخص السريع (4 بطاقات) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <!-- الحصة القادمة -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex items-start justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#7c8594]">الحصة القادمة اليوم</span>
+                <h3 class="text-base font-extrabold text-[#2d3139] mt-1">قواعد البيانات المتقدمة</h3>
+                <p class="text-xs text-[#0097a7] font-bold mt-1.5 flex items-center gap-1">
+                  <i data-lucide="clock" class="w-3.5 h-3.5"></i> 10:00 ص - قاعة 204
+                </p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-[#e0f7fa] text-[#0097a7] flex items-center justify-center shrink-0">
+                <i data-lucide="book-open" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <!-- أقرب امتحان -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex items-start justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#7c8594]">أقرب امتحان</span>
+                <h3 class="text-base font-extrabold text-[#2d3139] mt-1">هياكل البيانات</h3>
+                <p class="text-xs text-amber-600 font-bold mt-1.5 flex items-center gap-1">
+                  <i data-lucide="hourglass" class="w-3.5 h-3.5"></i> متبقي 3 أيام (الأحد)
+                </p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+                <i data-lucide="file-text" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <!-- نسبة الحضور -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex items-start justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#7c8594]">نسبة الحضور العامة</span>
+                <h3 class="text-2xl font-extrabold text-[#2d3139] mt-1">96.5%</h3>
+                <p class="text-xs text-emerald-600 font-bold mt-1">ممتاز (غياب واحد فقط)</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
+                <i data-lucide="check-circle-2" class="w-5 h-5"></i>
+              </div>
+            </div>
+
+            <!-- المعدل التراكمي -->
+            <div class="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-2xs flex items-start justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#7c8594]">المعدل التراكمي</span>
+                <h3 class="text-2xl font-extrabold text-[#2d3139] mt-1">4.72 <span class="text-xs font-normal text-[#7c8594]">/ 5.00</span></h3>
+                <p class="text-xs text-[#0097a7] font-bold mt-1">مرتبة الشرف الثانية</p>
+              </div>
+              <div class="w-11 h-11 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+                <i data-lucide="award" class="w-5 h-5"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- قسم حصص اليوم + الامتحانات القادمة -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- حصص اليوم (عمودين) -->
+            <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+              <div class="flex items-center justify-between mb-5">
+                <div>
+                  <h3 class="font-extrabold text-base text-[#2d3139]">جدول حصص اليوم</h3>
+                  <p class="text-xs text-[#7c8594] mt-0.5">المحاضرات المجدولة لهذا اليوم</p>
+                </div>
+                <button onclick="switchTab('schedule')" class="text-xs font-bold text-[#0097a7] hover:underline cursor-pointer">
+                  عرض الجدول الأسبوعي ←
+                </button>
+              </div>
+
+              <div id="today-classes-list" class="space-y-3">
+                <!-- يتم تعبئتها عبر JavaScript -->
+              </div>
+            </div>
+
+            <!-- الامتحانات القادمة (عمود واحد) -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+              <div class="flex items-center justify-between mb-5">
+                <div>
+                  <h3 class="font-extrabold text-base text-[#2d3139]">الامتحانات القادمة</h3>
+                  <p class="text-xs text-[#7c8594] mt-0.5">مواعيد الاختبارات النصفية والنهائية</p>
+                </div>
+                <button onclick="switchTab('exams')" class="text-xs font-bold text-[#0097a7] hover:underline cursor-pointer">
+                  الكل
+                </button>
+              </div>
+
+              <div id="overview-exams-list" class="space-y-3">
+                <!-- يتم تعبئتها عبر JavaScript -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- =====================================================
+             تبويب 2: جدول الحصص الأسبوعي (Schedule)
+        ====================================================== -->
+        <div id="tab-schedule" class="tab-content hidden space-y-5 fade-in">
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+              <div>
+                <h2 class="text-lg font-extrabold text-[#2d3139]">جدول الحصص والمحاضرات الأسبوعي</h2>
+                <p class="text-xs text-[#7c8594] mt-1">اختر اليوم لعرض مواعيد المحاضرات والقاعات وأسماء المحاضرين</p>
+              </div>
+
+              <!-- أزرار اختيار اليوم -->
+              <div id="day-filter-buttons" class="flex flex-wrap gap-2">
+                <!-- يتم توليدها عبر JS -->
+              </div>
+            </div>
+
+            <!-- قائمة حصص اليوم المحدد -->
+            <div id="schedule-cards-container" class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <!-- يتم توليدها عبر JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             تبويب 3: جدول الامتحانات (Exams)
+        ====================================================== -->
+        <div id="tab-exams" class="tab-content hidden space-y-5 fade-in">
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+              <div>
+                <h2 class="text-lg font-extrabold text-[#2d3139]">جدول الامتحانات الرسمية</h2>
+                <p class="text-xs text-[#7c8594] mt-1">تأكد من الحضور قبل موعد الامتحان بـ 15 دقيقة مع إحضار البطاقة الجامعية</p>
+              </div>
+
+              <div class="flex gap-2">
+                <button onclick="filterExams('all')" data-exam-filter="all" class="exam-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-[#0097a7] text-white cursor-pointer">الكل</button>
+                <button onclick="filterExams('midterm')" data-exam-filter="midterm" class="exam-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-[#5a6270] hover:bg-slate-200 cursor-pointer">اختبارات نصفية</button>
+                <button onclick="filterExams('final')" data-exam-filter="final" class="exam-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-[#5a6270] hover:bg-slate-200 cursor-pointer">اختبارات نهائية</button>
+              </div>
+            </div>
+
+            <!-- جدول الامتحانات المتجاوب -->
+            <div class="mt-5 overflow-x-auto">
+              <table class="w-full text-right border-collapse">
+                <thead>
+                  <tr class="border-b border-slate-200 text-xs font-bold text-[#7c8594] bg-slate-50/70">
+                    <th class="py-3.5 px-4 rounded-tr-xl">المقرر الدراسي</th>
+                    <th class="py-3.5 px-4">نوع الاختبار</th>
+                    <th class="py-3.5 px-4">التاريخ واليوم</th>
+                    <th class="py-3.5 px-4">الوقت</th>
+                    <th class="py-3.5 px-4">القاعة / المقعد</th>
+                    <th class="py-3.5 px-4 rounded-tl-xl">العدّاد التنازلي</th>
+                  </tr>
+                </thead>
+                <tbody id="exams-table-body" class="divide-y divide-slate-100 text-sm">
+                  <!-- يتم تعبئتها عبر JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             تبويب 4: الواجبات والدرجات (Assignments & Grades)
+        ====================================================== -->
+        <div id="tab-assignments" class="tab-content hidden space-y-6 fade-in">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- الواجبات المطلوبة -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+              <h3 class="text-base font-extrabold text-[#2d3139] mb-1">الواجبات والمشاريع</h3>
+              <p class="text-xs text-[#7c8594] mb-5">متابعة حالة تسليم التكليفات الدراسية</p>
+              <div id="assignments-list" class="space-y-3"></div>
+            </div>
+
+            <!-- سجل الدرجات الفصلية -->
+            <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+              <h3 class="text-base font-extrabold text-[#2d3139] mb-1">درجات أعمال السنة</h3>
+              <p class="text-xs text-[#7c8594] mb-5">الدرجات المرصودة من قبل أعضاء هيئة التدريس</p>
+              <div id="grades-list" class="space-y-4"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- =====================================================
+             تبويب 5: الإعلانات الأكاديمية (Announcements)
+        ====================================================== -->
+        <div id="tab-announcements" class="tab-content hidden space-y-4 fade-in">
+          <div class="bg-white rounded-2xl border border-slate-200/80 p-5 sm:p-6">
+            <h2 class="text-lg font-extrabold text-[#2d3139] mb-1">الإعلانات والتنبيهات الأكاديمية</h2>
+            <p class="text-xs text-[#7c8594] mb-6">آخر التحديثات الصادرة من عمادة القبول والتسجيل وأقسام الكلية</p>
+            <div id="announcements-list" class="space-y-4"></div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       المنطق البرمجي (JavaScript)
+  ========================================================== -->
+  <script>
+    // بيانات تجريبية غنية للطالب والجدول والامتحانات
+    const academicData = {
+      defaultStudent: {
+        id: '44510289',
+        name: 'عبدالله محمد العتيبي',
+        major: 'علوم الحاسب - المستوى 5'
+      },
+      schedule: {
+        'الأحد': [
+          { code: 'CS301', name: 'هياكل البيانات والخوارزميات', time: '08:00 ص - 09:50 ص', room: 'مبنى 4 - قاعة 102', instructor: 'د. خالد السبيعي', type: 'محاضرة نظرية', status: 'completed' },
+          { code: 'CS312', name: 'قواعد البيانات المتقدمة', time: '10:00 ص - 11:50 ص', room: 'مبنى 2 - قاعة 204', instructor: 'د. سارة المنصور', type: 'محاضرة نظرية', status: 'upcoming' },
+          { code: 'CS315', name: 'شبكات الحاسب', time: '01:00 م - 02:50 م', room: 'معمل الحاسب 3', instructor: 'م. طارق الحربي', type: 'تطبيق عملي', status: 'later' }
+        ],
+        'الإثنين': [
+          { code: 'SE304', name: 'هندسة البرمجيات', time: '09:00 ص - 10:50 ص', room: 'مبنى 4 - قاعة 301', instructor: 'د. فهد الغامدي', type: 'محاضرة نظرية', status: 'later' },
+          { code: 'MATH205', name: 'الاحتمالات والإحصاء', time: '11:00 ص - 12:50 م', room: 'مبنى 1 - قاعة 110', instructor: 'د. أحمد الزهراني', type: 'محاضرة نظرية', status: 'later' }
+        ],
+        'الثلاثاء': [
+          { code: 'CS301', name: 'معمل هياكل البيانات', time: '08:00 ص - 09:50 ص', room: 'معمل البرمجة 1', instructor: 'م. ريم القحطاني', type: 'تطبيق عملي', status: 'later' },
+          { code: 'CS312', name: 'معمل قواعد البيانات', time: '10:00 ص - 11:50 ص', room: 'معمل قواعد البيانات 2', instructor: 'م. نورة الدوسري', type: 'تطبيق عملي', status: 'later' }
+        ],
+        'الأربعاء': [
+          { code: 'CS315', name: 'شبكات الحاسب', time: '10:00 ص - 11:50 ص', room: 'مبنى 2 - قاعة 208', instructor: 'د. ماجد الشهري', type: 'محاضرة نظرية', status: 'later' },
+          { code: 'SE304', name: 'هندسة البرمجيات', time: '01:00 م - 02:50 م', room: 'عن بُعد (الفصول الافتراضية)', instructor: 'د. فهد الغامدي', type: 'محاضرة إلكترونية', status: 'later' }
+        ],
+        'الخميس': [
+          { code: 'MATH205', name: 'تمارين الاحتمالات والإحصاء', time: '09:00 ص - 10:50 ص', room: 'مبنى 1 - قاعة 112', instructor: 'م. عمر المطيري', type: 'حل تمارين', status: 'later' }
+        ]
+      },
+      exams: [
+        { code: 'CS301', name: 'هياكل البيانات والخوارزميات', category: 'midterm', categoryLabel: 'اختبار نصفي', date: 'الأحد 22 نوفمبر 2026', time: '09:00 ص - 10:30 ص', room: 'قاعة الاختبارات الكبرى A - مقعد 42', daysLeft: 3 },
+        { code: 'CS312', name: 'قواعد البيانات المتقدمة', category: 'midterm', categoryLabel: 'اختبار نصفي', date: 'الأربعاء 25 نوفمبر 2026', time: '11:00 ص - 12:30 م', room: 'مبنى 2 - قاعة 204 - مقعد 15', daysLeft: 6 },
+        { code: 'CS315', name: 'شبكات الحاسب', category: 'final', categoryLabel: 'اختبار نهائي', date: 'الإثنين 21 ديسمبر 2026', time: '08:30 ص - 10:30 ص', room: 'الصالة الرياضية - لجنة 3', daysLeft: 32 },
+        { code: 'SE304', name: 'هندسة البرمجيات', category: 'final', categoryLabel: 'اختبار نهائي', date: 'الخميس 24 ديسمبر 2026', time: '08:30 ص - 10:30 ص', room: 'مبنى 4 - مدرج 1', daysLeft: 35 }
+      ],
+      assignments: [
+        { title: 'تطبيق خوارزميات البحث والفرز (Binary Search Tree)', course: 'هياكل البيانات', due: 'غداً - 11:59 م', status: 'pending', statusText: 'بانتظار التسليم' },
+        { title: 'تصميم مخطط ERD لنظام مستشفى متكامل', course: 'قواعد البيانات المتقدمة', due: 'بعد 4 أيام', status: 'pending', statusText: 'بانتظار التسليم' },
+        { title: 'تحليل حزم البيانات باستخدام Wireshark', course: 'شبكات الحاسب', due: 'تم التسليم', status: 'submitted', statusText: 'مُسلّم' }
+      ],
+      grades: [
+        { course: 'هياكل البيانات والخوارزميات', score: 28.5, total: 30, label: 'أعمال السنة + الاختبار الأول' },
+        { course: 'قواعد البيانات المتقدمة', score: 27, total: 30, label: 'أعمال السنة + المشروع المبدئي' },
+        { course: 'شبكات الحاسب', score: 29, total: 30, label: 'المعمل + الاختبار القصير' },
+        { course: 'هندسة البرمجيات', score: 26.5, total: 30, label: 'تحليل المتطلبات + العرض' }
+      ],
+      announcements: [
+        { title: 'فتح باب الاعتذار عن مقرر دراسي للفصل الحالي', date: 'منذ ساعتين', tag: 'عمادة القبول والتسجيل', body: 'نود إفادة جميع الطلاب بأن فترة التقديم على الاعتذار عن مقرر دراسي متاحة عبر البوابة الأكاديمية حتى نهاية يوم الخميس القادم.' },
+        { title: 'جدول الاختبارات النهائية المعتمد', date: 'أمس', tag: 'الشؤون التعليمية', body: 'تم اعتماد ونشر جدول الاختبارات النهائية لجميع المستويات الدراسية، يرجى مراجعة تبويب جدول الامتحانات للتأكد من عدم وجود تعارض.' },
+        { title: 'ورشة عمل: الاستعداد للمقابلات التقنية', date: 'منذ 3 أيام', tag: 'نادي علوم الحاسب', body: 'يدعوكم نادي علوم الحاسب لحضور ورشة عمل تطبيقية حول كتابة السيرة الذاتية واجتياز المقابلات البرمجية يوم الثلاثاء القادم.' }
+      ]
+    };
+
+    let selectedDay = 'الأحد';
+
+    // إظهار إشعار Toast أنيق
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colors = type === 'error'
+        ? 'bg-rose-600 text-white'
+        : type === 'info'
+        ? 'bg-[#2d3139] text-white'
+        : 'bg-[#0097a7] text-white';
+
+      toast.className = `${colors} px-4 py-3 rounded-xl shadow-lg text-sm font-bold flex items-center gap-2.5 fade-in pointer-events-auto max-w-xs`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle-2'}" class="w-4 h-4 shrink-0"></i>
+        <span>${message}</span>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    }
+
+    // التبديل بين نموذج تسجيل الدخول ونموذج إعادة إنشاء كلمة المرور
+    function switchAuthView(view) {
+      const loginForm = document.getElementById('login-form');
+      const resetForm = document.getElementById('reset-form');
+      const subtitle = document.getElementById('auth-subtitle');
+
+      if (view === 'reset') {
+        loginForm.classList.add('hidden');
+        resetForm.classList.remove('hidden');
+        subtitle.textContent = 'إعادة إنشاء كلمة مرور جديدة لحسابك الأكاديمي';
+        // نسخ رقم الهوية إن كان مكتوباً في شاشة الدخول
+        const currentId = document.getElementById('national-id').value.trim();
+        if (currentId) document.getElementById('reset-id').value = currentId;
+      } else {
+        resetForm.classList.add('hidden');
+        loginForm.classList.remove('hidden');
+        subtitle.textContent = 'سجّل دخولك للوصول إلى جدول الحصص والامتحانات';
+      }
+    }
+
+    // تعبئة بيانات تجريبية سريعة
+    function fillDemoAccount() {
+      document.getElementById('national-id').value = '44510289';
+      document.getElementById('password').value = '12345678';
+      document.getElementById('remember-me').checked = true;
+      showToast('تمت تعبئة البيانات التجريبية، اضغط تسجيل الدخول', 'info');
+    }
+
+    // إظهار / إخفاء كلمة المرور
+    document.getElementById('toggle-pass-btn').addEventListener('click', function () {
+      const passInput = document.getElementById('password');
+      const isPassword = passInput.type === 'password';
+      passInput.type = isPassword ? 'text' : 'password';
+      this.innerHTML = `<i data-lucide="${isPassword ? 'eye-off' : 'eye'}" class="w-5 h-5"></i>`;
+      lucide.createIcons();
+    });
+
+    // معالجة تسجيل الدخول وإدخال الطالب للوحة التحكم
+    document.getElementById('login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const studentId = document.getElementById('national-id').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const remember = document.getElementById('remember-me').checked;
+
+      if (!studentId) {
+        showToast('يرجى إدخال رقم الهوية أو الرقم الأكاديمي', 'error');
+        document.getElementById('national-id').focus();
+        return;
+      }
+      if (!password) {
+        showToast('يرجى إدخال كلمة المرور', 'error');
+        document.getElementById('password').focus();
+        return;
+      }
+
+      // التحقق إذا كان الطالب أنشأ كلمة مرور مخصصة سابقاً في المتصفح
+      const savedPass = localStorage.getItem('student_custom_pass_' + studentId);
+      if (savedPass && savedPass !== password) {
+        showToast('كلمة المرور غير مطابقة لكلمة المرور الجديدة المحفوظة', 'error');
+        return;
+      }
+
+      // حفظ بيانات الجلسة
+      const sessionData = {
+        id: studentId,
+        name: studentId === '44510289' ? 'عبدالله محمد العتيبي' : 'طالب البوابة الأكاديمية'
+      };
+
+      if (remember) {
+        localStorage.setItem('active_student_session', JSON.stringify(sessionData));
+      } else {
+        sessionStorage.setItem('active_student_session', JSON.stringify(sessionData));
+      }
+
+      enterDashboard(sessionData);
+      showToast('تم تسجيل الدخول بنجاح، أهلاً بك في لوحة التحكم');
+    });
+
+    // معالجة إعادة إنشاء كلمة المرور
+    document.getElementById('reset-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const resetId = document.getElementById('reset-id').value.trim();
+      const newPass = document.getElementById('new-password').value.trim();
+      const confirmPass = document.getElementById('confirm-password').value.trim();
+
+      if (!resetId) {
+        showToast('يرجى إدخال رقم الهوية أو الرقم الأكاديمي', 'error');
+        return;
+      }
+      if (newPass.length < 6) {
+        showToast('يجب أن تتكون كلمة المرور الجديدة من 6 أحرف على الأقل', 'error');
+        return;
+      }
+      if (newPass !== confirmPass) {
+        showToast('كلمتا المرور غير متطابقتين', 'error');
+        return;
+      }
+
+      // حفظ كلمة المرور الجديدة محلياً وتعبئتها في نموذج الدخول
+      localStorage.setItem('student_custom_pass_' + resetId, newPass);
+      document.getElementById('national-id').value = resetId;
+      document.getElementById('password').value = newPass;
+
+      this.reset();
+      switchAuthView('login');
+      showToast('تمت إعادة إنشاء كلمة المرور بنجاح! يمكنك الدخول الآن');
+    });
+
+    // الدخول إلى لوحة تحكم الطالب وتحديث البيانات
+    function enterDashboard(student) {
+      document.getElementById('auth-screen').classList.add('hidden');
+      document.getElementById('dashboard-screen').classList.remove('hidden');
+
+      document.getElementById('sidebar-student-id').textContent = student.id;
+      document.getElementById('topbar-student-id').textContent = student.id;
+      document.getElementById('sidebar-student-name').textContent = student.name;
+      document.getElementById('topbar-title').textContent = `مرحباً بك، ${student.name.split(' ')[0]} 👋`;
+
+      renderDashboardContent();
+      lucide.createIcons();
+    }
+
+    // تسجيل الخروج والعودة لشاشة الدخول
+    function logoutStudent() {
+      localStorage.removeItem('active_student_session');
+      sessionStorage.removeItem('active_student_session');
+      document.getElementById('dashboard-screen').classList.add('hidden');
+      document.getElementById('auth-screen').classList.remove('hidden');
+      document.getElementById('notif-dropdown').classList.add('hidden');
+      toggleMobileSidebar(false);
+      showToast('تم تسجيل الخروج بنجاح', 'info');
+    }
+
+    // التنقل بين تبويبات لوحة التحكم
+    function switchTab(tabName) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.getElementById('tab-' + tabName).classList.remove('hidden');
+
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold transition-all bg-[#e0f7fa] text-[#0097a7]';
+        } else {
+          btn.className = 'nav-btn w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-[#5a6270] hover:bg-slate-50 transition-all';
+        }
+      });
+
+      toggleMobileSidebar(false);
+      lucide.createIcons();
+    }
+
+    // القائمة الجانبية على الجوال
+    function toggleMobileSidebar(open) {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (open) {
+        sidebar.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // إظهار / إخفاء قائمة الإشعارات
+    function toggleNotifications() {
+      document.getElementById('notif-dropdown').classList.toggle('hidden');
+    }
+
+    // بناء جميع محتويات لوحة التحكم
+    function renderDashboardContent() {
+      // 1. حصص اليوم في النظرة العامة
+      const todayList = document.getElementById('today-classes-list');
+      todayList.innerHTML = academicData.schedule['الأحد'].map(cls => {
+        const badge = cls.status === 'completed'
+          ? '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 text-slate-500">انتهت</span>'
+          : cls.status === 'upcoming'
+          ? '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#e0f7fa] text-[#0097a7]">الحصة القادمة</span>'
+          : '<span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-amber-50 text-amber-600">لاحقاً اليوم</span>';
+
+        return `
+          <div class="p-4 rounded-xl border ${cls.status === 'upcoming' ? 'border-[#0097a7]/40 bg-[#f0fbfc]/60' : 'border-slate-100 bg-slate-50/40'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-extrabold px-2 py-0.5 rounded bg-white border border-slate-200 text-[#0097a7]">${cls.code}</span>
+                <h4 class="font-bold text-sm text-[#2d3139]">${cls.name}</h4>
+              </div>
+              <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-[#7c8594]">
+                <span class="flex items-center gap-1"><i data-lucide="clock" class="w-3.5 h-3.5"></i> ${cls.time}</span>
+                <span class="flex items-center gap-1"><i data-lucide="map-pin" class="w-3.5 h-3.5"></i> ${cls.room}</span>
+                <span class="flex items-center gap-1"><i data-lucide="user" class="w-3.5 h-3.5"></i> ${cls.instructor}</span>
+              </div>
+            </div>
+            <div class="self-start sm:self-center shrink-0">${badge}</div>
+          </div>
+        `;
+      }).join('');
+
+      // 2. الامتحانات المختصرة في النظرة العامة
+      const overviewExams = document.getElementById('overview-exams-list');
+      overviewExams.innerHTML = academicData.exams.slice(0, 3).map(ex => `
+        <div class="p-3.5 rounded-xl border border-slate-100 bg-slate-50/50 space-y-1.5">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-[#0097a7]">${ex.categoryLabel}</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded-md ${ex.daysLeft <= 7 ? 'bg-amber-100 text-amber-700' : 'bg-slate-200/70 text-slate-600'}">
+              بعد ${ex.daysLeft} أيام
+            </span>
+          </div>
+          <h4 class="font-bold text-sm text-[#2d3139]">${ex.name}</h4>
+          <p class="text-xs text-[#7c8594]">${ex.date} • ${ex.time.split('-')[0]}</p>
+        </div>
+      `).join('');
+
+      // 3. أزرار الأيام والجدول الأسبوعي
+      renderScheduleByDay(selectedDay);
+
+      // 4. جدول الامتحانات الكامل
+      filterExams('all');
+
+      // 5. الواجبات والدرجات
+      document.getElementById('assignments-list').innerHTML = academicData.assignments.map(item => `
+        <div class="p-4 rounded-xl border border-slate-100 bg-slate-50/50 flex items-start justify-between gap-3">
+          <div>
+            <span class="text-xs font-bold text-[#0097a7]">${item.course}</span>
+            <h4 class="font-bold text-sm text-[#2d3139] mt-0.5">${item.title}</h4>
+            <p class="text-xs text-[#7c8594] mt-1">موعد التسليم: ${item.due}</p>
+          </div>
+          <span class="px-2.5 py-1 rounded-lg text-xs font-bold shrink-0 ${item.status === 'submitted' ? 'bg-emerald-50 text-emerald-600' : 'bg-amber-50 text-amber-600'}">
+            ${item.statusText}
+          </span>
+        </div>
+      `).join('');
+
+      document.getElementById('grades-list').innerHTML = academicData.grades.map(g => {
+        const pct = Math.round((g.score / g.total) * 100);
+        return `
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-sm">
+              <span class="font-bold text-[#2d3139]">${g.course}</span>
+              <span class="font-extrabold text-[#0097a7]">${g.score} <span class="text-xs font-normal text-[#7c8594]">/ ${g.total}</span></span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div class="h-full bg-[#0097a7] rounded-full" style="width: ${pct}%"></div>
+            </div>
+            <p class="text-xs text-[#7c8594]">${g.label}</p>
+          </div>
+        `;
+      }).join('');
+
+      // 6. الإعلانات الأكاديمية
+      document.getElementById('announcements-list').innerHTML = academicData.announcements.map(ann => `
+        <article class="p-4 sm:p-5 rounded-2xl border border-slate-100 bg-slate-50/40 space-y-2">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold bg-[#e0f7fa] text-[#0097a7]">${ann.tag}</span>
+            <span class="text-xs text-[#7c8594]">${ann.date}</span>
+          </div>
+          <h3 class="font-extrabold text-base text-[#2d3139]">${ann.title}</h3>
+          <p class="text-sm text-[#5a6270] leading-relaxed">${ann.body}</p>
+        </article>
+      `).join('');
+    }
+
+    // عرض حصص يوم محدد في التبويب الأسبوعي
+    function renderScheduleByDay(day) {
+      selectedDay = day;
+      const days = Object.keys(academicData.schedule);
+      const btnContainer = document.getElementById('day-filter-buttons');
+
+      btnContainer.innerHTML = days.map(d => `
+        <button
+          onclick="renderScheduleByDay('${d}')"
+          class="px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${d === day ? 'bg-[#0097a7] text-white shadow-xs' : 'bg-slate-100 text-[#5a6270] hover:bg-slate-200'}"
+        >
+          ${d}
+        </button>
+      `).join('');
+
+      const classes = academicData.schedule[day] || [];
+      const cardsContainer = document.getElementById('schedule-cards-container');
+
+      cardsContainer.innerHTML = classes.map(cls => `
+        <div class="p-5 rounded-2xl border border-slate-200/80 bg-white hover:border-[#0097a7]/50 transition-all space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-extrabold bg-[#e0f7fa] text-[#0097a7]">${cls.code}</span>
+            <span class="text-xs font-bold text-[#7c8594]">${cls.type}</span>
+          </div>
+          <h3 class="font-extrabold text-base text-[#2d3139]">${cls.name}</h3>
+          <div class="pt-2 border-t border-slate-100 space-y-2 text-xs text-[#5a6270]">
+            <div class="flex items-center gap-2"><i data-lucide="clock" class="w-4 h-4 text-[#0097a7]"></i> <span>${cls.time}</span></div>
+            <div class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-[#0097a7]"></i> <span>${cls.room}</span></div>
+            <div class="flex items-center gap-2"><i data-lucide="user-check" class="w-4 h-4 text-[#0097a7]"></i> <span>${cls.instructor}</span></div>
+          </div>
+        </div>
+      `).join('');
+
+      lucide.createIcons();
+    }
+
+    // تصفية وعرض جدول الامتحانات
+    function filterExams(filterType) {
+      document.querySelectorAll('.exam-filter-btn').forEach(btn => {
+        if (btn.dataset.examFilter === filterType) {
+          btn.className = 'exam-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-[#0097a7] text-white cursor-pointer';
+        } else {
+          btn.className = 'exam-filter-btn px-3.5 py-2 rounded-xl text-xs font-bold bg-slate-100 text-[#5a6270] hover:bg-slate-200 cursor-pointer';
+        }
+      });
+
+      const list = filterType === 'all'
+        ? academicData.exams
+        : academicData.exams.filter(e => e.category === filterType);
+
+      document.getElementById('exams-table-body').innerHTML = list.map(ex => `
+        <tr class="hover:bg-slate-50/70 transition-colors">
+          <td class="py-4 px-4">
+            <span class="text-xs font-bold text-[#0097a7] block">${ex.code}</span>
+            <span class="font-bold text-[#2d3139]">${ex.name}</span>
+          </td>
+          <td class="py-4 px-4">
+            <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${ex.category === 'midterm' ? 'bg-amber-50 text-amber-700' : 'bg-indigo-50 text-indigo-700'}">
+              ${ex.categoryLabel}
+            </span>
+          </td>
+          <td class="py-4 px-4 font-medium text-[#2d3139] whitespace-nowrap">${ex.date}</td>
+          <td class="py-4 px-4 text-[#5a6270] whitespace-nowrap">${ex.time}</td>
+          <td class="py-4 px-4 text-[#5a6270]">${ex.room}</td>
+          <td class="py-4 px-4 whitespace-nowrap">
+            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-bold ${ex.daysLeft <= 7 ? 'bg-rose-50 text-rose-600' : 'bg-emerald-50 text-emerald-600'}">
+              متبقي ${ex.daysLeft} يوم
+            </span>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    // تهيئة الصفحة عند التحميل والتحقق من وجود جلسة محفوظة
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      const savedSession = localStorage.getItem('active_student_session') || sessionStorage.getItem('active_student_session');
+      if (savedSession) {
+        try {
+          enterDashboard(JSON.parse(savedSession));
+        } catch (err) {
+          localStorage.removeItem('active_student_session');
+        }
+      }
+    });
+  </script>
+</body>
+</html>
