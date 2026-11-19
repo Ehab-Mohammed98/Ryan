@@ -1,0 +1,69 @@
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Cairo', 'sans-serif'],
+          },
+          colors: {
+            navyDark: '#071727',
+            navyPrimary: '#0E1A30',
+            tealAccent: '#0D9488',
+            tealLight: '#E6F7F5',
+            goldBadge: '#F59E0B',
+            bgBody: '#F4F6F9',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    /* ضبط الهوية العامة واتجاه اليمين إلى اليسار */
+    * {
+      box-sizing: border-box;
+      font-family: 'Cairo', sans-serif;
+    }
+
+    body {
+      background-color: #F4F6F9;
+      color: #1E293B;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* حركة ظهور ناعمة للعناصر والأقسام */
+    .fade-in {
+      animation: fadeInUp 0.28s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* تخصيص شريط التمرير */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: #F4F6F9;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #CBD5E1;
+      border-radius: 9999px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: #0D9488;
+    }
+  </style>
