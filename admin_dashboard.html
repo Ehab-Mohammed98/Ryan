@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة تحكم إدارة مدرسة الريان</title>
+  <!-- استيراد خط Cairo العربي -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <!-- استيراد Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- استيراد أيقونات Lucide -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+<script src="Css/admin_Dashboard.html" rel="stylesheet"/>
+</head>
+<body class="min-h-screen bg-[#F4F6F9] text-[#1E293B] antialiased selection:bg-[#0D9488] selection:text-white">
+
+  <!-- حاوية الإشعارات الفورية بدلاً من alert() -->
+  <div id="toast-container" class="fixed bottom-5 left-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- =========================================================
+       1. شاشة تسجيل دخول إدارة المدرسة
+  ========================================================== -->
+  <section id="login-view" class="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-[#071727] via-[#0E1A30] to-[#0b2e33]">
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl border-t-4 border-[#0D9488] p-6 sm:p-8 fade-in">
+      <div class="text-center mb-7">
+        <div class="w-16 h-16 rounded-2xl bg-[#E6F7F5] text-[#0D9488] flex items-center justify-center mx-auto mb-4 shadow-sm">
+          <i data-lucide="shield-check" class="w-9 h-9"></i>
+        </div>
+        <span class="inline-block px-3 py-1 rounded-full bg-[#E6F7F5] text-[#0D9488] text-xs font-bold mb-2">
+          بوابة الإدارة المدرسية
+        </span>
+        <h1 class="text-2xl font-extrabold text-[#0E1A30]">تسجيل دخول إدارة مدرسة الريان</h1>
+        <p class="text-sm text-[#64748B] mt-1.5">
+          إدارة جداول الحصص، الامتحانات، الإعلانات، والرد على أولياء الأمور
+        </p>
+      </div>
+
+      <form id="admin-login-form" class="space-y-4" novalidate>
+        <div>
+          <label for="login-email" class="block text-sm font-bold text-[#0E1A30] mb-1.5">
+            البريد الإلكتروني الإداري
+          </label>
+          <div class="relative">
+            <input
+              type="email"
+              id="login-email"
+              dir="ltr"
+              placeholder="admin@alrayan-school.edu.sa"
+              class="w-full h-12 px-4 rounded-xl bg-[#F4F6F9] border border-slate-200 text-sm text-right text-[#0E1A30] outline-none focus:bg-white focus:border-[#0D9488] focus:ring-4 focus:ring-[#0D9488]/15 transition-all"
+              required
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="login-password" class="block text-sm font-bold text-[#0E1A30] mb-1.5">
+            كلمة المرور
+          </label>
+          <div class="relative">
+            <input
+              type="password"
+              id="login-password"
+              dir="ltr"
+              placeholder="••••••••"
+              class="w-full h-12 px-4 rounded-xl bg-[#F4F6F9] border border-slate-200 text-sm text-right text-[#0E1A30] outline-none focus:bg-white focus:border-[#0D9488] focus:ring-4 focus:ring-[#0D9488]/15 transition-all"
+              required
+            />
+          </div>
+        </div>
+
+        <p id="login-error" class="hidden text-xs font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3.5 py-2.5"></p>
+
+        <button
+          type="submit"
+          class="w-full h-12 rounded-xl bg-[#0D9488] hover:bg-[#0E1A30] text-white font-bold text-sm transition-all shadow-md cursor-pointer flex items-center justify-center gap-2"
+        >
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          <span>دخول إلى لوحة التحكم</span>
+        </button>
+      </form>
+
+      <!-- تعبئة سريعة للتجربة -->
+      <div class="mt-6 pt-5 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
+        <button
+          type="button"
+          onclick="fillDemoCredentials()"
+          class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-[#E6F7F5] hover:bg-[#0D9488] text-[#0D9488] hover:text-white font-bold transition-colors cursor-pointer flex items-center justify-center gap-1.5"
+        >
+          <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+          <span>تعبئة سريعة للتجربة</span>
+        </button>
+        <span class="text-[#64748B]">المستخدم التجريبي: <strong class="text-[#0E1A30]">admin</strong></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       2. لوحة التحكم الرئيسية بعد تسجيل الدخول
+  ========================================================== -->
+  <div id="dashboard-view" class="hidden min-h-screen flex bg-[#F4F6F9]">
+
+    <!-- طبقة التعتيم للقائمة الجانبية في الجوال -->
+    <div id="sidebar-backdrop" onclick="toggleSidebar(false)" class="fixed inset-0 bg-[#071727]/60 z-30 hidden lg:hidden backdrop-blur-xs"></div>
+
+    <!-- الشريط الجانبي التنقلي -->
+    <aside id="sidebar" class="fixed lg:static inset-y-0 right-0 z-40 w-72 bg-[#071727] text-white flex flex-col justify-between transition-transform duration-300 translate-x-full lg:translate-x-0 shrink-0 shadow-xl">
+      <div>
+        <!-- شعار المدرسة في أعلى الشريط الجانبي -->
+        <div class="h-20 px-5 flex items-center justify-between border-b border-white/10">
+          <div class="flex items-center gap-3">
+            <div class="w-11 h-11 rounded-xl bg-[#0D9488] text-white flex items-center justify-center shadow-sm">
+              <i data-lucide="school" class="w-6 h-6"></i>
+            </div>
+            <div>
+              <h2 class="font-extrabold text-base text-white leading-tight">مدرسة الريان</h2>
+              <span class="text-[11px] text-[#2DD4BF] font-bold">لوحة الإدارة المدرسية</span>
+            </div>
+          </div>
+          <button onclick="toggleSidebar(false)" aria-label="إغلاق القائمة" class="lg:hidden p-2 rounded-lg text-slate-300 hover:bg-white/10 cursor-pointer">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+
+        <!-- بطاقة تعريف المشرف -->
+        <div class="mx-4 mt-5 p-3.5 rounded-2xl bg-[#0E1A30] border border-white/10">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-[#0D9488]/20 text-[#2DD4BF] font-extrabold flex items-center justify-center border border-[#0D9488]/40">
+              إ
+            </div>
+            <div class="min-w-0">
+              <p class="text-sm font-extrabold text-white truncate">إدارة مدرسة الريان</p>
+              <p class="text-[11px] text-slate-300 truncate">العام الدراسي 1448هـ / 2026م</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- روابط الأقسام -->
+        <nav class="px-3.5 mt-6 space-y-1.5" aria-label="أقسام لوحة التحكم">
+          <button onclick="switchSection('overview')" data-nav="overview" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold bg-[#0D9488] text-white transition-all cursor-pointer">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>نظرة عامة</span>
+          </button>
+
+          <button onclick="switchSection('messages')" data-nav="messages" class="nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition-all cursor-pointer">
+            <span class="flex items-center gap-3">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+              <span>رسائل أولياء الأمور</span>
+            </span>
+            <span id="sidebar-new-msgs-count" class="px-2 py-0.5 text-xs rounded-full bg-[#F59E0B] text-[#071727] font-extrabold">0</span>
+          </button>
+
+          <button onclick="switchSection('schedules')" data-nav="schedules" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="calendar-days" class="w-4 h-4"></i>
+            <span>جداول الحصص</span>
+          </button>
+
+          <button onclick="switchSection('exams')" data-nav="exams" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="file-clock" class="w-4 h-4"></i>
+            <span>مواعيد الامتحانات</span>
+          </button>
+
+          <button onclick="switchSection('announcements')" data-nav="announcements" class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition-all cursor-pointer">
+            <i data-lucide="megaphone" class="w-4 h-4"></i>
+            <span>الإعلانات المدرسية</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- أسفل الشريط الجانبي: إعادة ضبط البيانات وتسجيل الخروج -->
+      <div class="p-4 border-t border-white/10 space-y-2">
+        <button
+          type="button"
+          onclick="openResetConfirmModal()"
+          class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-[#F59E0B] bg-[#F59E0B]/10 hover:bg-[#F59E0B]/20 border border-[#F59E0B]/30 transition-colors cursor-pointer"
+        >
+          <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+          <span>إعادة ضبط البيانات الافتراضية</span>
+        </button>
+
+        <button
+          type="button"
+          onclick="logoutAdmin()"
+          class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold text-rose-300 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-400/20 transition-colors cursor-pointer"
+        >
+          <i data-lucide="log-out" class="w-4 h-4"></i>
+          <span>تسجيل الخروج</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="flex-1 flex flex-col min-w-0">
+
+      <!-- الشريط العلوي -->
+      <header class="h-20 bg-white border-b border-slate-200/80 px-4 sm:px-8 flex items-center justify-between gap-4 sticky top-0 z-20 shadow-2xs">
+        <div class="flex items-center gap-3 min-w-0">
+          <button
+            type="button"
+            onclick="toggleSidebar(true)"
+            aria-label="فتح القائمة"
+            class="lg:hidden p-2.5 rounded-xl bg-[#F4F6F9] text-[#0E1A30] hover:bg-[#E6F7F5] hover:text-[#0D9488] transition-colors cursor-pointer"
+          >
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+          <div class="min-w-0">
+            <h1 id="page-title" class="text-lg sm:text-xl font-extrabold text-[#0E1A30] truncate">نظرة عامة</h1>
+            <p class="text-xs text-[#64748B] hidden sm:block">مدرسة الريان — نظام متابعة العمليات المدرسية والطلاب</p>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2.5 shrink-0">
+          <span class="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#E6F7F5] text-[#0D9488] text-xs font-extrabold">
+            <span class="w-2 h-2 rounded-full bg-[#0D9488]"></span>
+            الحفظ التلقائي مفعّل
+          </span>
+          <button
+            type="button"
+            onclick="switchSection('messages')"
+            class="relative p-2.5 rounded-xl bg-[#F4F6F9] hover:bg-[#E6F7F5] text-[#0E1A30] hover:text-[#0D9488] transition-colors cursor-pointer"
+            title="الرسائل الواردة"
+          >
+            <i data-lucide="bell" class="w-5 h-5"></i>
+            <span id="header-bell-dot" class="hidden absolute top-2 right-2 w-2 h-2 rounded-full bg-[#F59E0B]"></span>
+          </button>
+        </div>
+      </header>
+
+      <!-- منطقة الأقسام -->
+      <main class="flex-1 p-4 sm:p-7 max-w-7xl w-full mx-auto space-y-6">
+
+        <!-- ===================================================
+             القسم 1: نظرة عامة
+        ==================================================== -->
+        <section id="section-overview" class="dashboard-section space-y-6 fade-in">
+          <!-- 4 بطاقات إحصائيات -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/70 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#64748B]">عدد الرسائل الواردة</span>
+                <h3 id="stat-messages" class="text-2xl font-extrabold text-[#0E1A30] mt-1">0</h3>
+                <p id="stat-messages-sub" class="text-xs font-bold text-[#0D9488] mt-1">0 بانتظار الرد</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-[#E6F7F5] text-[#0D9488] flex items-center justify-center shrink-0">
+                <i data-lucide="mail-open" class="w-6 h-6"></i>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/70 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#64748B]">الحصص الأسبوعية</span>
+                <h3 id="stat-schedules" class="text-2xl font-extrabold text-[#0E1A30] mt-1">0</h3>
+                <p class="text-xs font-bold text-[#0D9488] mt-1">موزعة على المراحل</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-[#E6F7F5] text-[#0D9488] flex items-center justify-center shrink-0">
+                <i data-lucide="calendar-days" class="w-6 h-6"></i>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/70 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#64748B]">الامتحانات المجدولة</span>
+                <h3 id="stat-exams" class="text-2xl font-extrabold text-[#0E1A30] mt-1">0</h3>
+                <p class="text-xs font-bold text-[#F59E0B] mt-1">اختبارات معتمدة</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center shrink-0">
+                <i data-lucide="file-clock" class="w-6 h-6"></i>
+              </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/70 flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold text-[#64748B]">نسبة الحضور</span>
+                <h3 class="text-2xl font-extrabold text-[#0E1A30] mt-1">96.4%</h3>
+                <p class="text-xs font-bold text-emerald-600 mt-1">معدل انضباط مرتفع</p>
+              </div>
+              <div class="w-12 h-12 rounded-2xl bg-[#E6F7F5] text-[#0D9488] flex items-center justify-center shrink-0">
+                <i data-lucide="user-check" class="w-6 h-6"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- جدول سريع لأحدث التحديثات -->
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
+              <div>
+                <h2 class="text-base sm:text-lg font-extrabold text-[#0E1A30]">أحدث التحديثات والأنشطة المدرسية</h2>
+                <p class="text-xs text-[#64748B] mt-0.5">ملخص سريع لآخر الرسائل، الحصص، الامتحانات، والإعلانات</p>
+              </div>
+              <button
+                type="button"
+                onclick="switchSection('announcements')"
+                class="px-4 py-2 rounded-xl bg-[#E6F7F5] hover:bg-[#0D9488] text-[#0D9488] hover:text-white text-xs font-bold transition-colors cursor-pointer self-start sm:self-auto"
+              >
+                + نشر إعلان جديد
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-right border-collapse">
+                <thead>
+                  <tr class="bg-[#F4F6F9] text-[#0E1A30] text-xs font-extrabold border-b border-slate-200">
+                    <th class="py-3 px-4 rounded-tr-xl">النوع</th>
+                    <th class="py-3 px-4">العنوان / التفاصيل</th>
+                    <th class="py-3 px-4">التاريخ / الوقت</th>
+                    <th class="py-3 px-4 rounded-tl-xl">الحالة</th>
+                  </tr>
+                </thead>
+                <tbody id="overview-updates-tbody" class="divide-y divide-slate-100 text-sm"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================
+             القسم 2: رسائل أولياء الأمور
+        ==================================================== -->
+        <section id="section-messages" class="dashboard-section hidden space-y-5 fade-in">
+          <div class="bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+            <!-- شريط البحث والفلترة -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-5 border-b border-slate-100">
+              <div>
+                <h2 class="text-lg font-extrabold text-[#0E1A30]">صندوق رسائل أولياء الأمور</h2>
+                <p class="text-xs text-[#64748B] mt-0.5">استعراض الاستفسارات، البحث فيها، والرد المباشر على أولياء الأمور</p>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                <div class="relative">
+                  <input
+                    type="text"
+                    id="msg-search-input"
+                    oninput="renderMessages()"
+                    placeholder="ابحث باسم ولي الأمر أو الموضوع..."
+                    class="w-full sm:w-64 h-10 pr-9 pl-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]"
+                  />
+                  <i data-lucide="search" class="w-4 h-4 text-[#64748B] absolute right-3 top-3"></i>
+                </div>
+
+                <div class="flex items-center gap-1.5 bg-[#F4F6F9] p-1 rounded-xl">
+                  <button type="button" onclick="setMessageFilter('all')" data-msg-filter="all" class="msg-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-[#0E1A30] text-white cursor-pointer">
+                    الكل
+                  </button>
+                  <button type="button" onclick="setMessageFilter('جديد')" data-msg-filter="جديد" class="msg-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-[#64748B] hover:text-[#0E1A30] cursor-pointer">
+                    جديد
+                  </button>
+                  <button type="button" onclick="setMessageFilter('تم الرد')" data-msg-filter="تم الرد" class="msg-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-[#64748B] hover:text-[#0E1A30] cursor-pointer">
+                    تم الرد
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- شبكة الرسائل ونافذة الرد -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5">
+              <div id="messages-list-container" class="lg:col-span-6 space-y-3 max-h-[560px] overflow-y-auto pl-1"></div>
+
+              <div id="message-reply-box" class="lg:col-span-6 bg-[#F4F6F9] rounded-2xl border border-slate-200/80 p-5 sm:p-6 flex flex-col justify-center min-h-[340px]">
+                <div class="text-center text-[#64748B]">
+                  <i data-lucide="message-square-reply" class="w-10 h-10 mx-auto mb-2.5 text-[#0D9488] opacity-80"></i>
+                  <p class="text-sm font-bold text-[#0E1A30]">اختر رسالة لعرض تفاصيلها وإرسال الرد</p>
+                  <p class="text-xs mt-1">سيتم تحديث حالة الرسالة تلقائياً إلى «تم الرد» وحفظها</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================
+             القسم 3: جداول الحصص
+        ==================================================== -->
+        <section id="section-schedules" class="dashboard-section hidden space-y-6 fade-in">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- نموذج إضافة أو تعديل حصة + رفع CSV -->
+            <div class="lg:col-span-5 space-y-5">
+              <div class="bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+                <div class="flex items-center justify-between mb-4">
+                  <h2 id="schedule-form-title" class="text-base sm:text-lg font-extrabold text-[#0E1A30]">إضافة حصة دراسية</h2>
+                  <button type="button" id="cancel-edit-schedule-btn" onclick="resetScheduleForm()" class="hidden text-xs font-bold text-rose-600 hover:underline cursor-pointer">
+                    إلغاء التعديل
+                  </button>
+                </div>
+
+                <form id="schedule-form" class="space-y-3.5" novalidate>
+                  <input type="hidden" id="schedule-edit-id" />
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label for="sch-stage" class="block text-xs font-bold text-[#0E1A30] mb-1">المرحلة الدراسية</label>
+                      <select id="sch-stage" class="w-full h-11 px-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs font-bold outline-none focus:bg-white focus:border-[#0D9488]">
+                        <option value="المرحلة الابتدائية">المرحلة الابتدائية</option>
+                        <option value="المرحلة المتوسطة">المرحلة المتوسطة</option>
+                        <option value="المرحلة الثانوية">المرحلة الثانوية</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label for="sch-day" class="block text-xs font-bold text-[#0E1A30] mb-1">اليوم الدراسي</label>
+                      <select id="sch-day" class="w-full h-11 px-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs font-bold outline-none focus:bg-white focus:border-[#0D9488]">
+                        <option value="الأحد">الأحد</option>
+                        <option value="الإثنين">الإثنين</option>
+                        <option value="الثلاثاء">الثلاثاء</option>
+                        <option value="الأربعاء">الأربعاء</option>
+                        <option value="الخميس">الخميس</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label for="sch-subject" class="block text-xs font-bold text-[#0E1A30] mb-1">المادة الدراسية</label>
+                      <input type="text" id="sch-subject" placeholder="مثال: الرياضيات" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                    </div>
+
+                    <div>
+                      <label for="sch-time" class="block text-xs font-bold text-[#0E1A30] mb-1">وقت الحصة</label>
+                      <input type="text" id="sch-time" placeholder="08:00 ص - 08:45 ص" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                    </div>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                      <label for="sch-teacher" class="block text-xs font-bold text-[#0E1A30] mb-1">المعلم / المعلمة</label>
+                      <input type="text" id="sch-teacher" placeholder="أ. خالد السبيعي" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                    </div>
+
+                    <div>
+                      <label for="sch-room" class="block text-xs font-bold text-[#0E1A30] mb-1">الفصل / القاعة</label>
+                      <input type="text" id="sch-room" placeholder="قاعة 102" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    id="schedule-submit-btn"
+                    class="w-full h-11 rounded-xl bg-[#0D9488] hover:bg-[#0E1A30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                  >
+                    حفظ الحصة في الجدول
+                  </button>
+                </form>
+              </div>
+
+              <!-- رفع جدول عبر نص أو CSV دفعة واحدة -->
+              <div class="bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+                <h3 class="text-sm sm:text-base font-extrabold text-[#0E1A30] mb-1 flex items-center gap-2">
+                  <i data-lucide="file-spreadsheet" class="w-4 h-4 text-[#0D9488]"></i>
+                  <span>رفع جدول حصص عبر نص / CSV دفعة واحدة</span>
+                </h3>
+                <p class="text-xs text-[#64748B] mb-3 leading-relaxed">
+                  كل سطر يمثل حصة بالترتيب: <span class="font-bold text-[#0E1A30]">المرحلة، اليوم، المادة، الوقت، المعلم، القاعة</span>
+                </p>
+
+                <textarea
+                  id="bulk-csv-input"
+                  rows="3"
+                  placeholder="المرحلة المتوسطة, الأحد, العلوم, 09:00 ص - 09:45 ص, أ. سارة المنصور, معمل 1"
+                  class="w-full p-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488] mb-2.5"
+                ></textarea>
+
+                <div class="flex flex-col sm:flex-row gap-2">
+                  <button
+                    type="button"
+                    onclick="importBulkSchedulesFromText()"
+                    class="flex-1 py-2.5 px-3 rounded-xl bg-[#0E1A30] hover:bg-[#0D9488] text-white text-xs font-bold transition-colors cursor-pointer"
+                  >
+                    استيراد النص المضاف
+                  </button>
+                  <label class="py-2.5 px-3 rounded-xl bg-[#E6F7F5] hover:bg-[#0D9488] text-[#0D9488] hover:text-white text-xs font-bold transition-colors cursor-pointer text-center">
+                    <span>رفع ملف CSV</span>
+                    <input type="file" accept=".csv,.txt" class="hidden" onchange="handleScheduleCsvFile(event)" />
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- عرض الجداول مع التصفية حسب المرحلة الدراسية -->
+            <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-100">
+                <div>
+                  <h2 class="text-base sm:text-lg font-extrabold text-[#0E1A30]">جداول الحصص الأسبوعية</h2>
+                  <p class="text-xs text-[#64748B] mt-0.5">تصفية حسب المرحلة الدراسية وتعديل أو حذف أي حصة</p>
+                </div>
+
+                <select
+                  id="schedule-stage-filter"
+                  onchange="renderSchedules()"
+                  class="h-10 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs font-bold text-[#0E1A30] outline-none focus:border-[#0D9488] cursor-pointer"
+                >
+                  <option value="all">جميع المراحل الدراسية</option>
+                  <option value="المرحلة الابتدائية">المرحلة الابتدائية</option>
+                  <option value="المرحلة المتوسطة">المرحلة المتوسطة</option>
+                  <option value="المرحلة الثانوية">المرحلة الثانوية</option>
+                </select>
+              </div>
+
+              <div id="schedules-list-container" class="mt-4 space-y-3 max-h-[620px] overflow-y-auto pl-1"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================
+             القسم 4: مواعيد الامتحانات
+        ==================================================== -->
+        <section id="section-exams" class="dashboard-section hidden space-y-6 fade-in">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- نموذج إضافة أو تعديل امتحان -->
+            <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6 h-fit">
+              <div class="flex items-center justify-between mb-4">
+                <h2 id="exam-form-title" class="text-base sm:text-lg font-extrabold text-[#0E1A30]">إضافة موعد امتحان</h2>
+                <button type="button" id="cancel-edit-exam-btn" onclick="resetExamForm()" class="hidden text-xs font-bold text-rose-600 hover:underline cursor-pointer">
+                  إلغاء التعديل
+                </button>
+              </div>
+
+              <form id="exam-form" class="space-y-3.5" novalidate>
+                <input type="hidden" id="exam-edit-id" />
+
+                <div>
+                  <label for="exam-subject" class="block text-xs font-bold text-[#0E1A30] mb-1">المادة الدراسية</label>
+                  <input type="text" id="exam-subject" placeholder="مثال: الفيزياء" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                </div>
+
+                <div>
+                  <label for="exam-stage" class="block text-xs font-bold text-[#0E1A30] mb-1">المرحلة الدراسية</label>
+                  <select id="exam-stage" class="w-full h-11 px-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs font-bold outline-none focus:bg-white focus:border-[#0D9488]">
+                    <option value="المرحلة الابتدائية">المرحلة الابتدائية</option>
+                    <option value="المرحلة المتوسطة">المرحلة المتوسطة</option>
+                    <option value="المرحلة الثانوية">المرحلة الثانوية</option>
+                  </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div>
+                    <label for="exam-date" class="block text-xs font-bold text-[#0E1A30] mb-1">التاريخ</label>
+                    <input type="date" id="exam-date" class="w-full h-11 px-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                  </div>
+
+                  <div>
+                    <label for="exam-time" class="block text-xs font-bold text-[#0E1A30] mb-1">الوقت</label>
+                    <input type="text" id="exam-time" placeholder="09:00 ص - 10:30 ص" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                  </div>
+                </div>
+
+                <div>
+                  <label for="exam-room" class="block text-xs font-bold text-[#0E1A30] mb-1">القاعة / اللجنة</label>
+                  <input type="text" id="exam-room" placeholder="قاعة الاختبارات الكبرى - لجنة 2" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                </div>
+
+                <button
+                  type="submit"
+                  id="exam-submit-btn"
+                  class="w-full h-11 rounded-xl bg-[#0D9488] hover:bg-[#0E1A30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                >
+                  حفظ موعد الامتحان
+                </button>
+              </form>
+            </div>
+
+            <!-- قائمة الامتحانات المجدولة -->
+            <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+              <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+                <div>
+                  <h2 class="text-base sm:text-lg font-extrabold text-[#0E1A30]">جدول الامتحانات المعتمدة</h2>
+                  <p class="text-xs text-[#64748B] mt-0.5">إدارة مواعيد الاختبارات والقاعات وتعديلها أو حذفها</p>
+                </div>
+              </div>
+
+              <div id="exams-list-container" class="mt-4 space-y-3 max-h-[580px] overflow-y-auto pl-1"></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ===================================================
+             القسم 5: الإعلانات المدرسية
+        ==================================================== -->
+        <section id="section-announcements" class="dashboard-section hidden space-y-6 fade-in">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- نموذج نشر إعلان جديد -->
+            <div class="lg:col-span-5 bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6 h-fit">
+              <h2 class="text-base sm:text-lg font-extrabold text-[#0E1A30] mb-1">نشر إعلان مدرسي جديد</h2>
+              <p class="text-xs text-[#64748B] mb-4">يظهر الإعلان فوراً ضمن سجل التحديثات والإعلانات المدرسية</p>
+
+              <form id="announcement-form" class="space-y-3.5" novalidate>
+                <div>
+                  <label for="ann-title" class="block text-xs font-bold text-[#0E1A30] mb-1">عنوان الإعلان</label>
+                  <input type="text" id="ann-title" placeholder="مثال: انطلاق اختبارات منتصف الفصل" class="w-full h-11 px-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required />
+                </div>
+
+                <div>
+                  <label for="ann-stage" class="block text-xs font-bold text-[#0E1A30] mb-1">الفئة المستهدفة</label>
+                  <select id="ann-stage" class="w-full h-11 px-3 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs font-bold outline-none focus:bg-white focus:border-[#0D9488]">
+                    <option value="جميع المراحل">جميع المراحل</option>
+                    <option value="المرحلة الابتدائية">المرحلة الابتدائية</option>
+                    <option value="المرحلة المتوسطة">المرحلة المتوسطة</option>
+                    <option value="المرحلة الثانوية">المرحلة الثانوية</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label for="ann-content" class="block text-xs font-bold text-[#0E1A30] mb-1">نص الإعلان</label>
+                  <textarea id="ann-content" rows="4" placeholder="اكتب تفاصيل الإعلان أو التنويه المدرسي..." class="w-full p-3.5 rounded-xl bg-[#F4F6F9] border border-slate-200 text-xs outline-none focus:bg-white focus:border-[#0D9488]" required></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  class="w-full h-11 rounded-xl bg-[#0D9488] hover:bg-[#0E1A30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer"
+                >
+                  نشر الإعلان الآن
+                </button>
+              </form>
+            </div>
+
+            <!-- قائمة الإعلانات المنشورة -->
+            <div class="lg:col-span-7 bg-white rounded-2xl shadow-sm border border-slate-200/70 p-5 sm:p-6">
+              <div class="pb-4 border-b border-slate-100">
+                <h2 class="text-base sm:text-lg font-extrabold text-[#0E1A30]">الإعلانات المنشورة</h2>
+                <p class="text-xs text-[#64748B] mt-0.5">يمكنك مراجعة الإعلانات أو حذف القديم منها</p>
+              </div>
+
+              <div id="announcements-list-container" class="mt-4 space-y-3 max-h-[560px] overflow-y-auto pl-1"></div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- نافذة تأكيد إعادة ضبط البيانات الافتراضية (بديل confirm) -->
+  <div id="reset-modal" class="fixed inset-0 z-50 hidden bg-[#071727]/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl border-t-4 border-[#F59E0B] fade-in">
+      <div class="w-12 h-12 rounded-2xl bg-amber-50 text-[#F59E0B] flex items-center justify-center mb-3">
+        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+      </div>
+      <h3 class="text-lg font-extrabold text-[#0E1A30]">إعادة ضبط البيانات الافتراضية؟</h3>
+      <p class="text-xs sm:text-sm text-[#64748B] mt-1.5 leading-relaxed">
+        سيتم استعادة الرسائل والحصص والامتحانات والإعلانات الافتراضية لمدرسة الريان وحذف أي تعديلات محلية إضافية.
+      </p>
+      <div class="mt-6 flex items-center justify-end gap-2.5">
+        <button type="button" onclick="closeResetConfirmModal()" class="px-4 py-2.5 rounded-xl bg-[#F4F6F9] hover:bg-slate-200 text-[#0E1A30] text-xs font-bold cursor-pointer">
+          إلغاء
+        </button>
+        <button type="button" onclick="confirmResetDefaultData()" class="px-4 py-2.5 rounded-xl bg-[#F59E0B] hover:bg-amber-600 text-white text-xs font-bold cursor-pointer">
+          تأكيد إعادة الضبط
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       3. المنطق البرمجي وإدارة الحالة (JavaScript)
+  ========================================================== -->
+  <script>
+    const STORAGE_KEY = 'alrayan_admin_dashboard_v1';
+    const AUTH_KEY = 'alrayan_admin_session_v1';
+
+    // البيانات الافتراضية لمدرسة الريان
+    const defaultState = {
+      messages: [
+        {
+          id: 'MSG-101',
+          parentName: 'أ. عبدالله بن محمد الغامدي',
+          phone: '0551234567',
+          subject: 'استفسار عن مواعيد الحصص للمرحلة المتوسطة',
+          body: 'السلام عليكم، هل تم اعتماد الجدول الصباحي الجديد للصف الثاني المتوسط بداية من يوم الأحد؟',
+          date: 'اليوم - 09:15 ص',
+          status: 'جديد',
+          reply: '',
+        },
+        {
+          id: 'MSG-102',
+          parentName: 'أ. هند بنت سعد العتيبي',
+          phone: '0509876543',
+          subject: 'تعديل موعد زيارة لإتمام إجراءات القبول',
+          body: 'نرجو إفادتنا بإمكانية مراجعة مكتب القبول والتسجيل يوم الثلاثاء الساعة 10:30 صباحاً.',
+          date: 'أمس - 01:40 م',
+          status: 'تم الرد',
+          reply: 'وعليكم السلام أستاذة هند، تم تأكيد موعد مراجعتكم يوم الثلاثاء الساعة 10:30 صباحاً في مبنى الإدارة.',
+        },
+        {
+          id: 'MSG-103',
+          parentName: 'أ. فهد بن ناصر الدوسري',
+          phone: '0544411223',
+          subject: 'الاستعلام عن قاعات الاختبارات النصفية',
+          body: 'هل يتم توزيع الطلاب حسب اللجان في المرحلة الثانوية قبل الاختبار بأسبوع؟',
+          date: 'منذ يومين',
+          status: 'جديد',
+          reply: '',
+        },
+      ],
+      schedules: [
+        {
+          id: 'SCH-1',
+          stage: 'المرحلة الابتدائية',
+          day: 'الأحد',
+          subject: 'لغتي الجميلة',
+          time: '08:00 ص - 08:45 ص',
+          teacher: 'أ. منى القحطاني',
+          room: 'ابتدائي 4 - فصل أ',
+        },
+        {
+          id: 'SCH-2',
+          stage: 'المرحلة المتوسطة',
+          day: 'الأحد',
+          subject: 'الرياضيات',
+          time: '08:50 ص - 09:35 ص',
+          teacher: 'أ. خالد السبيعي',
+          room: 'متوسط 2 - قاعة 12',
+        },
+        {
+          id: 'SCH-3',
+          stage: 'المرحلة الثانوية',
+          day: 'الإثنين',
+          subject: 'الفيزياء',
+          time: '09:40 ص - 10:25 ص',
+          teacher: 'أ. طارق الحربي',
+          room: 'ثانوي 1 - مختبر 2',
+        },
+      ],
+      exams: [
+        {
+          id: 'EXM-1',
+          subject: 'الرياضيات',
+          stage: 'المرحلة المتوسطة',
+          date: '2026-11-24',
+          time: '09:00 ص - 10:30 ص',
+          room: 'القاعة الكبرى - لجنة 1',
+        },
+        {
+          id: 'EXM-2',
+          subject: 'الفيزياء',
+          stage: 'المرحلة الثانوية',
+          date: '2026-11-26',
+          time: '09:00 ص - 11:00 ص',
+          room: 'قاعة 204 - لجنة 4',
+        },
+      ],
+      announcements: [
+        {
+          id: 'ANN-1',
+          title: 'اعتماد جداول الاختبارات النصفية للفصل الدراسي الحالي',
+          stage: 'جميع المراحل',
+          content: 'تعلن إدارة مدرسة الريان عن اعتماد مواعيد الاختبارات النصفية، ويُرجى من الطلاب الحضور قبل الموعد بربع ساعة.',
+          date: 'اليوم - 08:00 ص',
+        },
+        {
+          id: 'ANN-2',
+          title: 'فتح باب التسجيل للأنشطة العلمية والثقافية',
+          stage: 'المرحلة المتوسطة',
+          content: 'تدعو إدارة النشاط الطلابي طلاب المرحلة المتوسطة لتسجيل أسمائهم في الأندية العلمية خلال هذا الأسبوع.',
+          date: 'أمس',
+        },
+      ],
+    };
+
+    let state = loadState();
+    let currentSection = 'overview';
+    let currentMsgFilter = 'all';
+    let selectedMessageId = null;
+
+    // تحميل البيانات من localStorage مع معالجة الأخطاء بأمان
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        const parsed = JSON.parse(raw);
+        return {
+          messages: Array.isArray(parsed.messages) ? parsed.messages : structuredClone(defaultState.messages),
+          schedules: Array.isArray(parsed.schedules) ? parsed.schedules : structuredClone(defaultState.schedules),
+          exams: Array.isArray(parsed.exams) ? parsed.exams : structuredClone(defaultState.exams),
+          announcements: Array.isArray(parsed.announcements) ? parsed.announcements : structuredClone(defaultState.announcements),
+        };
+      } catch (err) {
+        return structuredClone(defaultState);
+      }
+    }
+
+    // حفظ البيانات تلقائياً وتحديث الواجهة
+    function saveAndRefresh() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      } catch (err) {
+        showToast('تعذر حفظ البيانات في التخزين المحلي', 'error');
+      }
+      renderAll();
+    }
+
+    // عرض إشعار Toast
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const styleClass =
+        type === 'error'
+          ? 'bg-rose-600 text-white'
+          : type === 'warning'
+          ? 'bg-[#F59E0B] text-[#071727]'
+          : 'bg-[#0E1A30] text-white border border-[#0D9488]/50';
+
+      toast.className = `${styleClass} px-4 py-3 rounded-2xl shadow-xl text-xs sm:text-sm font-bold flex items-center gap-2.5 fade-in pointer-events-auto`;
+      toast.innerHTML = `
+        <i data-lucide="${type === 'error' ? 'alert-circle' : 'check-circle-2'}" class="w-4 h-4 shrink-0 text-[#2DD4BF]"></i>
+        <span>${escapeHtml(message)}</span>
+      `;
+      container.appendChild(toast);
+      lucide.createIcons();
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.25s ease';
+        setTimeout(() => toast.remove(), 250);
+      }, 3200);
+    }
+
+    // حماية النصوص المدخلة من XSS عند العرض
+    function escapeHtml(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    // =======================================================
+    // تسجيل الدخول والخروج
+    // =======================================================
+    function fillDemoCredentials() {
+      document.getElementById('login-email').value = 'admin@alrayan-school.edu.sa';
+      document.getElementById('login-password').value = 'Rayyan@2026';
+      document.getElementById('login-error').classList.add('hidden');
+      showToast('تمت تعبئة بيانات الدخول التجريبية');
+    }
+
+    document.getElementById('admin-login-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value.trim();
+      const pass = document.getElementById('login-password').value.trim();
+      const errEl = document.getElementById('login-error');
+
+      if (!email || !pass) {
+        errEl.textContent = 'يرجى إدخال البريد الإلكتروني وكلمة المرور.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      // السماح بالبيانات التجريبية أو أي بيانات إدارية صالحة للتجربة السريعة
+      const isValidDemo =
+        (email.toLowerCase() === 'admin@alrayan-school.edu.sa' && pass === 'Rayyan@2026') ||
+        (email.toLowerCase() === 'admin' && pass === 'admin') ||
+        (email.includes('@') && pass.length >= 4);
+
+      if (!isValidDemo) {
+        errEl.textContent = 'بيانات الدخول غير صحيحة. استخدم زر التعبئة السريعة للتجربة.';
+        errEl.classList.remove('hidden');
+        return;
+      }
+
+      errEl.classList.add('hidden');
+      sessionStorage.setItem(AUTH_KEY, 'authenticated');
+      showDashboardView();
+      showToast('مرحباً بك في لوحة تحكم إدارة مدرسة الريان');
+    });
+
+    function logoutAdmin() {
+      sessionStorage.removeItem(AUTH_KEY);
+      document.getElementById('dashboard-view').classList.add('hidden');
+      document.getElementById('login-view').classList.remove('hidden');
+      toggleSidebar(false);
+      showToast('تم تسجيل الخروج بنجاح');
+    }
+
+    function showDashboardView() {
+      document.getElementById('login-view').classList.add('hidden');
+      document.getElementById('dashboard-view').classList.remove('hidden');
+      renderAll();
+      lucide.createIcons();
+    }
+
+    // =======================================================
+    // التنقل والقائمة الجانبية
+    // =======================================================
+    const sectionTitles = {
+      overview: 'نظرة عامة',
+      messages: 'رسائل أولياء الأمور',
+      schedules: 'جداول الحصص',
+      exams: 'مواعيد الامتحانات',
+      announcements: 'الإعلانات المدرسية',
+    };
+
+    function switchSection(sectionKey) {
+      if (!sectionTitles[sectionKey]) return;
+      currentSection = sectionKey;
+
+      document.querySelectorAll('.dashboard-section').forEach((sec) => {
+        sec.classList.add('hidden');
+      });
+      document.getElementById(`section-${sectionKey}`).classList.remove('hidden');
+      document.getElementById('page-title').textContent = sectionTitles[sectionKey];
+
+      document.querySelectorAll('.nav-item').forEach((btn) => {
+        const isActive = btn.dataset.nav === sectionKey;
+        btn.className = isActive
+          ? 'nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold bg-[#0D9488] text-white transition-all cursor-pointer shadow-sm'
+          : 'nav-item w-full flex items-center justify-between px-4 py-3 rounded-xl text-sm font-bold text-slate-300 hover:bg-white/10 hover:text-white transition-all cursor-pointer';
+      });
+
+      toggleSidebar(false);
+      lucide.createIcons();
+    }
+
+    function toggleSidebar(open) {
+      const sidebar = document.getElementById('sidebar');
+      const backdrop = document.getElementById('sidebar-backdrop');
+      if (open) {
+        sidebar.classList.remove('translate-x-full');
+        backdrop.classList.remove('hidden');
+      } else {
+        sidebar.classList.add('translate-x-full');
+        backdrop.classList.add('hidden');
+      }
+    }
+
+    // =======================================================
+    // 1. نظرة عامة والإحصائيات
+    // =======================================================
+    function renderOverview() {
+      const newMsgsCount = state.messages.filter((m) => m.status === 'جديد').length;
+
+      document.getElementById('stat-messages').textContent = state.messages.length;
+      document.getElementById('stat-messages-sub').textContent = `${newMsgsCount} بانتظار الرد`;
+      document.getElementById('stat-schedules').textContent = state.schedules.length;
+      document.getElementById('stat-exams').textContent = state.exams.length;
+
+      const badge = document.getElementById('sidebar-new-msgs-count');
+      badge.textContent = newMsgsCount;
+      badge.classList.toggle('hidden', newMsgsCount === 0);
+
+      document.getElementById('header-bell-dot').classList.toggle('hidden', newMsgsCount === 0);
+
+      // تجميع أحدث التحديثات من الأقسام المختلفة
+      const updates = [];
+
+      state.messages.slice(0, 2).forEach((m) => {
+        updates.push({
+          type: 'رسالة ولي أمر',
+          badgeClass: 'bg-[#E6F7F5] text-[#0D9488]',
+          title: `${m.parentName} — ${m.subject}`,
+          date: m.date,
+          status: m.status,
+          statusClass: m.status === 'جديد' ? 'bg-amber-100 text-amber-800' : 'bg-emerald-100 text-emerald-700',
+        });
+      });
+
+      state.exams.slice(0, 2).forEach((ex) => {
+        updates.push({
+          type: 'موعد امتحان',
+          badgeClass: 'bg-amber-50 text-[#F59E0B]',
+          title: `اختبار ${ex.subject} (${ex.stage}) - ${ex.room}`,
+          date: `${ex.date} | ${ex.time}`,
+          status: 'مجدول',
+          statusClass: 'bg-[#0E1A30] text-white',
+        });
+      });
+
+      state.announcements.slice(0, 2).forEach((ann) => {
+        updates.push({
+          type: 'إعلان مدرسي',
+          badgeClass: 'bg-slate-100 text-[#0E1A30]',
+          title: ann.title,
+          date: ann.date,
+          status: ann.stage,
+          statusClass: 'bg-[#E6F7F5] text-[#0D9488]',
+        });
+      });
+
+      const tbody = document.getElementById('overview-updates-tbody');
+      if (updates.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="py-8 text-center text-xs text-[#64748B]">لا توجد تحديثات حالياً</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = updates
+        .slice(0, 6)
+        .map(
+          (row) => `
+          <tr class="hover:bg-[#F4F6F9]/60 transition-colors">
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-lg text-xs font-bold ${row.badgeClass}">${escapeHtml(row.type)}</span>
+            </td>
+            <td class="py-3.5 px-4 font-bold text-[#0E1A30]">${escapeHtml(row.title)}</td>
+            <td class="py-3.5 px-4 text-xs text-[#64748B] whitespace-nowrap">${escapeHtml(row.date)}</td>
+            <td class="py-3.5 px-4 whitespace-nowrap">
+              <span class="px-2.5 py-1 rounded-full text-xs font-bold ${row.statusClass}">${escapeHtml(row.status)}</span>
+            </td>
+          </tr>
+        `
+        )
+        .join('');
+    }
+
+    // =======================================================
+    // 2. رسائل أولياء الأمور (بحث + فلترة + رد)
+    // =======================================================
+    function setMessageFilter(filter) {
+      currentMsgFilter = filter;
+      document.querySelectorAll('.msg-filter-btn').forEach((btn) => {
+        const active = btn.dataset.msgFilter === filter;
+        btn.className = active
+          ? 'msg-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold bg-[#0E1A30] text-white cursor-pointer'
+          : 'msg-filter-btn px-3 py-1.5 rounded-lg text-xs font-bold text-[#64748B] hover:text-[#0E1A30] cursor-pointer';
+      });
+      renderMessages();
+    }
+
+    function renderMessages() {
+      const query = (document.getElementById('msg-search-input')?.value || '').trim().toLowerCase();
+      const container = document.getElementById('messages-list-container');
+
+      const filtered = state.messages.filter((m) => {
+        const matchesFilter = currentMsgFilter === 'all' || m.status === currentMsgFilter;
+        const matchesSearch =
+          !query ||
+          m.parentName.toLowerCase().includes(query) ||
+          m.subject.toLowerCase().includes(query) ||
+          m.body.toLowerCase().includes(query);
+        return matchesFilter && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center rounded-2xl border border-dashed border-slate-200 text-xs text-[#64748B]">
+            لا توجد رسائل مطابقة لمعايير البحث أو الفلترة الحالية.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered
+        .map((msg) => {
+          const isSelected = msg.id === selectedMessageId;
+          const badgeStyle =
+            msg.status === 'جديد'
+              ? 'bg-amber-100 text-amber-800 border border-amber-300'
+              : 'bg-[#E6F7F5] text-[#0D9488] border border-[#0D9488]/30';
+
+          return `
+            <div
+              onclick="selectMessage('${msg.id}')"
+              class="p-4 rounded-2xl border transition-all cursor-pointer ${
+                isSelected
+                  ? 'border-[#0D9488] bg-[#E6F7F5]/45 shadow-xs'
+                  : 'border-slate-200/80 bg-white hover:border-[#0D9488]/50'
+              }"
+            >
+              <div class="flex items-center justify-between gap-2 mb-1.5">
+                <span class="text-xs font-extrabold text-[#0E1A30]">${escapeHtml(msg.parentName)}</span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold ${badgeStyle}">${escapeHtml(msg.status)}</span>
+              </div>
+              <p class="text-xs font-bold text-[#0D9488]">${escapeHtml(msg.subject)}</p>
+              <p class="text-xs text-[#64748B] line-clamp-2 mt-1">${escapeHtml(msg.body)}</p>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 mt-2.5 pt-2 border-t border-slate-100">
+                <span dir="ltr">${escapeHtml(msg.phone)}</span>
+                <span>${escapeHtml(msg.date)}</span>
+              </div>
+            </div>
+          `;
+        })
+        .join('');
+    }
+
+    function selectMessage(id) {
+      selectedMessageId = id;
+      renderMessages();
+
+      const msg = state.messages.find((m) => m.id === id);
+      const replyBox = document.getElementById('message-reply-box');
+      if (!msg) return;
+
+      replyBox.innerHTML = `
+        <div class="space-y-4 fade-in">
+          <div class="flex items-start justify-between gap-2 pb-3 border-b border-slate-200/80">
+            <div>
+              <span class="text-[11px] font-extrabold text-[#0D9488]">${escapeHtml(msg.id)} • ${escapeHtml(msg.date)}</span>
+              <h3 class="text-base font-extrabold text-[#0E1A30] mt-0.5">${escapeHtml(msg.subject)}</h3>
+              <p class="text-xs text-[#64748B] mt-0.5">ولي الأمر: <strong class="text-[#0E1A30]">${escapeHtml(msg.parentName)}</strong> — <span dir="ltr">${escapeHtml(msg.phone)}</span></p>
+            </div>
+            <span class="px-2.5 py-1 rounded-full text-xs font-extrabold ${
+              msg.status === 'جديد' ? 'bg-amber-100 text-amber-800' : 'bg-[#E6F7F5] text-[#0D9488]'
+            }">${escapeHtml(msg.status)}</span>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-white border border-slate-200/70 text-xs sm:text-sm text-[#1E293B] leading-relaxed">
+            ${escapeHtml(msg.body)}
+          </div>
+
+          <form onsubmit="submitMessageReply(event, '${msg.id}')" class="space-y-3">
+            <label for="reply-textarea" class="block text-xs font-extrabold text-[#0E1A30]">نص الرد على ولي الأمر:</label>
+            <textarea
+              id="reply-textarea"
+              rows="3"
+              placeholder="اكتب رد الإدارة هنا..."
+              class="w-full p-3 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm outline-none focus:border-[#0D9488] focus:ring-4 focus:ring-[#0D9488]/10"
+              required
+            >${escapeHtml(msg.reply || '')}</textarea>
+            <button
+              type="submit"
+              class="w-full h-11 rounded-xl bg-[#0D9488] hover:bg-[#0E1A30] text-white font-bold text-xs sm:text-sm transition-colors cursor-pointer flex items-center justify-center gap-2"
+            >
+              <i data-lucide="send" class="w-4 h-4"></i>
+              <span>إرسال الرد وتغيير الحالة إلى «تم الرد»</span>
+            </button>
+          </form>
+        </div>
+      `;
+      lucide.createIcons();
+    }
+
+    function submitMessageReply(event, msgId) {
+      event.preventDefault();
+      const replyText = document.getElementById('reply-textarea').value.trim();
+      if (!replyText) {
+        showToast('يرجى كتابة نص الرد قبل الإرسال', 'error');
+        return;
+      }
+
+      const target = state.messages.find((m) => m.id === msgId);
+      if (!target) return;
+
+      target.reply = replyText;
+      target.status = 'تم الرد';
+      saveAndRefresh();
+      selectMessage(msgId);
+      showToast('تم إرسال الرد وتحديث حالة الرسالة إلى «تم الرد»');
+    }
+
+    // =======================================================
+    // 3. جداول الحصص (إضافة + تعديل + حذف + CSV/نص)
+    // =======================================================
+    document.getElementById('schedule-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const editId = document.getElementById('schedule-edit-id').value;
+      const stage = document.getElementById('sch-stage').value;
+      const day = document.getElementById('sch-day').value;
+      const subject = document.getElementById('sch-subject').value.trim();
+      const time = document.getElementById('sch-time').value.trim();
+      const teacher = document.getElementById('sch-teacher').value.trim();
+      const room = document.getElementById('sch-room').value.trim();
+
+      if (!subject || !time || !teacher || !room) {
+        showToast('يرجى إكمال جميع بيانات الحصة الدراسية', 'error');
+        return;
+      }
+
+      if (editId) {
+        const idx = state.schedules.findIndex((s) => s.id === editId);
+        if (idx !== -1) {
+          state.schedules[idx] = { id: editId, stage, day, subject, time, teacher, room };
+          showToast('تم تحديث بيانات الحصة بنجاح');
+        }
+      } else {
+        state.schedules.unshift({
+          id: 'SCH-' + Date.now(),
+          stage,
+          day,
+          subject,
+          time,
+          teacher,
+          room,
+        });
+        showToast('تمت إضافة الحصة الدراسية إلى الجدول');
+      }
+
+      resetScheduleForm();
+      saveAndRefresh();
+    });
+
+    function editSchedule(id) {
+      const item = state.schedules.find((s) => s.id === id);
+      if (!item) return;
+
+      document.getElementById('schedule-edit-id').value = item.id;
+      document.getElementById('sch-stage').value = item.stage;
+      document.getElementById('sch-day').value = item.day;
+      document.getElementById('sch-subject').value = item.subject;
+      document.getElementById('sch-time').value = item.time;
+      document.getElementById('sch-teacher').value = item.teacher;
+      document.getElementById('sch-room').value = item.room;
+
+      document.getElementById('schedule-form-title').textContent = 'تعديل حصة دراسية';
+      document.getElementById('schedule-submit-btn').textContent = 'تحديث الحصة';
+      document.getElementById('cancel-edit-schedule-btn').classList.remove('hidden');
+    }
+
+    function resetScheduleForm() {
+      document.getElementById('schedule-form').reset();
+      document.getElementById('schedule-edit-id').value = '';
+      document.getElementById('schedule-form-title').textContent = 'إضافة حصة دراسية';
+      document.getElementById('schedule-submit-btn').textContent = 'حفظ الحصة في الجدول';
+      document.getElementById('cancel-edit-schedule-btn').classList.add('hidden');
+    }
+
+    function deleteSchedule(id) {
+      state.schedules = state.schedules.filter((s) => s.id !== id);
+      if (document.getElementById('schedule-edit-id').value === id) {
+        resetScheduleForm();
+      }
+      saveAndRefresh();
+      showToast('تم حذف الحصة من الجدول', 'warning');
+    }
+
+    function parseAndImportScheduleRows(rawText) {
+      const lines = rawText
+        .split(/\r?\n/)
+        .map((line) => line.trim())
+        .filter(Boolean);
+
+      let added = 0;
+      lines.forEach((line) => {
+        // دعم الفاصلة الإنجليزية والعربية والمنقوطة
+        const cols = line.split(/[,،;]/).map((c) => c.trim());
+        if (cols.length >= 3) {
+          state.schedules.unshift({
+            id: 'SCH-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
+            stage: cols[0] || 'المرحلة المتوسطة',
+            day: cols[1] || 'الأحد',
+            subject: cols[2],
+            time: cols[3] || '08:00 ص - 08:45 ص',
+            teacher: cols[4] || 'هيئة التدريس',
+            room: cols[5] || 'قاعة 101',
+          });
+          added++;
+        }
+      });
+
+      if (added > 0) {
+        saveAndRefresh();
+        showToast(`تم استيراد ${added} حصة دراسية بنجاح`);
+      } else {
+        showToast('لم يتم العثور على سطور صالحة. تأكد من فصل القيم بفاصلة (,)', 'error');
+      }
+    }
+
+    function importBulkSchedulesFromText() {
+      const textarea = document.getElementById('bulk-csv-input');
+      const text = textarea.value.trim();
+      if (!text) {
+        showToast('يرجى لصق بيانات الحصص أولاً', 'error');
+        return;
+      }
+      parseAndImportScheduleRows(text);
+      textarea.value = '';
+    }
+
+    function handleScheduleCsvFile(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        parseAndImportScheduleRows(String(e.target.result || ''));
+      };
+      reader.onerror = () => showToast('تعذر قراءة الملف المحدد', 'error');
+      reader.readAsText(file, 'UTF-8');
+      event.target.value = '';
+    }
+
+    function renderSchedules() {
+      const stageFilter = document.getElementById('schedule-stage-filter')?.value || 'all';
+      const container = document.getElementById('schedules-list-container');
+
+      const items =
+        stageFilter === 'all'
+          ? state.schedules
+          : state.schedules.filter((s) => s.stage === stageFilter);
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center rounded-2xl border border-dashed border-slate-200 text-xs text-[#64748B]">
+            لا توجد حصص مسجلة لهذه المرحلة الدراسية حالياً.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = items
+        .map(
+          (s) => `
+          <div class="p-4 rounded-2xl border border-slate-200/80 bg-[#F4F6F9]/55 hover:bg-white transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-[#0E1A30] text-white">${escapeHtml(s.stage)}</span>
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-[#E6F7F5] text-[#0D9488]">${escapeHtml(s.day)}</span>
+                <span class="text-xs font-bold text-[#64748B]">${escapeHtml(s.time)}</span>
+              </div>
+              <h4 class="text-sm sm:text-base font-extrabold text-[#0E1A30]">${escapeHtml(s.subject)}</h4>
+              <p class="text-xs text-[#64748B]">المعلم: <strong class="text-[#1E293B]">${escapeHtml(s.teacher)}</strong> • القاعة: <strong class="text-[#1E293B]">${escapeHtml(s.room)}</strong></p>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+              <button
+                type="button"
+                onclick="editSchedule('${s.id}')"
+                class="px-3 py-1.5 rounded-xl bg-white hover:bg-[#E6F7F5] border border-slate-200 text-xs font-bold text-[#0E1A30] hover:text-[#0D9488] transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                <span>تعديل</span>
+              </button>
+              <button
+                type="button"
+                onclick="deleteSchedule('${s.id}')"
+                class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>حذف</span>
+              </button>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+      lucide.createIcons();
+    }
+
+    // =======================================================
+    // 4. مواعيد الامتحانات (إضافة + تعديل + حذف)
+    // =======================================================
+    document.getElementById('exam-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const editId = document.getElementById('exam-edit-id').value;
+      const subject = document.getElementById('exam-subject').value.trim();
+      const stage = document.getElementById('exam-stage').value;
+      const date = document.getElementById('exam-date').value;
+      const time = document.getElementById('exam-time').value.trim();
+      const room = document.getElementById('exam-room').value.trim();
+
+      if (!subject || !date || !time || !room) {
+        showToast('يرجى تعبئة جميع حقول موعد الامتحان', 'error');
+        return;
+      }
+
+      if (editId) {
+        const idx = state.exams.findIndex((ex) => ex.id === editId);
+        if (idx !== -1) {
+          state.exams[idx] = { id: editId, subject, stage, date, time, room };
+          showToast('تم تحديث موعد الامتحان بنجاح');
+        }
+      } else {
+        state.exams.unshift({
+          id: 'EXM-' + Date.now(),
+          subject,
+          stage,
+          date,
+          time,
+          room,
+        });
+        showToast('تمت إضافة موعد الامتحان إلى الجدول');
+      }
+
+      resetExamForm();
+      saveAndRefresh();
+    });
+
+    function editExam(id) {
+      const ex = state.exams.find((item) => item.id === id);
+      if (!ex) return;
+
+      document.getElementById('exam-edit-id').value = ex.id;
+      document.getElementById('exam-subject').value = ex.subject;
+      document.getElementById('exam-stage').value = ex.stage;
+      document.getElementById('exam-date').value = ex.date;
+      document.getElementById('exam-time').value = ex.time;
+      document.getElementById('exam-room').value = ex.room;
+
+      document.getElementById('exam-form-title').textContent = 'تعديل موعد امتحان';
+      document.getElementById('exam-submit-btn').textContent = 'تحديث الامتحان';
+      document.getElementById('cancel-edit-exam-btn').classList.remove('hidden');
+    }
+
+    function resetExamForm() {
+      document.getElementById('exam-form').reset();
+      document.getElementById('exam-edit-id').value = '';
+      document.getElementById('exam-form-title').textContent = 'إضافة موعد امتحان';
+      document.getElementById('exam-submit-btn').textContent = 'حفظ موعد الامتحان';
+      document.getElementById('cancel-edit-exam-btn').classList.add('hidden');
+    }
+
+    function deleteExam(id) {
+      state.exams = state.exams.filter((ex) => ex.id !== id);
+      if (document.getElementById('exam-edit-id').value === id) {
+        resetExamForm();
+      }
+      saveAndRefresh();
+      showToast('تم حذف موعد الامتحان', 'warning');
+    }
+
+    function renderExams() {
+      const container = document.getElementById('exams-list-container');
+      if (state.exams.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center rounded-2xl border border-dashed border-slate-200 text-xs text-[#64748B]">
+            لا توجد مواعيد امتحانات مجدولة حالياً.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.exams
+        .map(
+          (ex) => `
+          <div class="p-4 rounded-2xl border border-slate-200/80 bg-[#F4F6F9]/55 hover:bg-white transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div class="space-y-1">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-amber-100 text-amber-800">${escapeHtml(ex.stage)}</span>
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-[#E6F7F5] text-[#0D9488]">${escapeHtml(ex.date)}</span>
+                <span class="text-xs font-bold text-[#64748B]">${escapeHtml(ex.time)}</span>
+              </div>
+              <h4 class="text-sm sm:text-base font-extrabold text-[#0E1A30]">اختبار ${escapeHtml(ex.subject)}</h4>
+              <p class="text-xs text-[#64748B]">القاعة / اللجنة: <strong class="text-[#1E293B]">${escapeHtml(ex.room)}</strong></p>
+            </div>
+
+            <div class="flex items-center gap-2 self-end sm:self-center shrink-0">
+              <button
+                type="button"
+                onclick="editExam('${ex.id}')"
+                class="px-3 py-1.5 rounded-xl bg-white hover:bg-[#E6F7F5] border border-slate-200 text-xs font-bold text-[#0E1A30] hover:text-[#0D9488] transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                <span>تعديل</span>
+              </button>
+              <button
+                type="button"
+                onclick="deleteExam('${ex.id}')"
+                class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-600 text-rose-600 hover:text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+              >
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                <span>حذف</span>
+              </button>
+            </div>
+          </div>
+        `
+        )
+        .join('');
+      lucide.createIcons();
+    }
+
+    // =======================================================
+    // 5. الإعلانات المدرسية (نشر + حذف)
+    // =======================================================
+    document.getElementById('announcement-form').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const title = document.getElementById('ann-title').value.trim();
+      const stage = document.getElementById('ann-stage').value;
+      const content = document.getElementById('ann-content').value.trim();
+
+      if (!title || !content) {
+        showToast('يرجى إدخال عنوان الإعلان ونصه', 'error');
+        return;
+      }
+
+      const nowTime = new Date().toLocaleTimeString('ar-SA', { hour: '2-digit', minute: '2-digit' });
+      state.announcements.unshift({
+        id: 'ANN-' + Date.now(),
+        title,
+        stage,
+        content,
+        date: `اليوم - ${nowTime}`,
+      });
+
+      this.reset();
+      saveAndRefresh();
+      showToast('تم نشر الإعلان المدرسي بنجاح');
+    });
+
+    function deleteAnnouncement(id) {
+      state.announcements = state.announcements.filter((a) => a.id !== id);
+      saveAndRefresh();
+      showToast('تم حذف الإعلان', 'warning');
+    }
+
+    function renderAnnouncements() {
+      const container = document.getElementById('announcements-list-container');
+      if (state.announcements.length === 0) {
+        container.innerHTML = `
+          <div class="p-8 text-center rounded-2xl border border-dashed border-slate-200 text-xs text-[#64748B]">
+            لا توجد إعلانات مدرسية منشورة حالياً.
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = state.announcements
+        .map(
+          (ann) => `
+          <article class="p-4 rounded-2xl border border-slate-200/80 bg-[#F4F6F9]/55 hover:bg-white transition-all space-y-2">
+            <div class="flex items-center justify-between gap-2">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-lg text-xs font-extrabold bg-[#E6F7F5] text-[#0D9488]">${escapeHtml(ann.stage)}</span>
+                <span class="text-[11px] text-[#64748B]">${escapeHtml(ann.date)}</span>
+              </div>
+              <button
+                type="button"
+                onclick="deleteAnnouncement('${ann.id}')"
+                class="p-1.5 rounded-lg text-rose-500 hover:bg-rose-50 transition-colors cursor-pointer"
+                title="حذف الإعلان"
+              >
+                <i data-lucide="trash-2" class="w-4 h-4"></i>
+              </button>
+            </div>
+            <h4 class="text-sm sm:text-base font-extrabold text-[#0E1A30]">${escapeHtml(ann.title)}</h4>
+            <p class="text-xs sm:text-sm text-[#1E293B] leading-relaxed">${escapeHtml(ann.content)}</p>
+          </article>
+        `
+        )
+        .join('');
+      lucide.createIcons();
+    }
+
+    // =======================================================
+    // إعادة ضبط البيانات الافتراضية
+    // =======================================================
+    function openResetConfirmModal() {
+      document.getElementById('reset-modal').classList.remove('hidden');
+      lucide.createIcons();
+    }
+
+    function closeResetConfirmModal() {
+      document.getElementById('reset-modal').classList.add('hidden');
+    }
+
+    function confirmResetDefaultData() {
+      state = structuredClone(defaultState);
+      selectedMessageId = null;
+      resetScheduleForm();
+      resetExamForm();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      closeResetConfirmModal();
+      document.getElementById('message-reply-box').innerHTML = `
+        <div class="text-center text-[#64748B]">
+          <i data-lucide="message-square-reply" class="w-10 h-10 mx-auto mb-2.5 text-[#0D9488] opacity-80"></i>
+          <p class="text-sm font-bold text-[#0E1A30]">اختر رسالة لعرض تفاصيلها وإرسال الرد</p>
+          <p class="text-xs mt-1">سيتم تحديث حالة الرسالة تلقائياً إلى «تم الرد» وحفظها</p>
+        </div>
+      `;
+      renderAll();
+      showToast('تمت إعادة ضبط جميع البيانات إلى القيم الافتراضية');
+    }
+
+    // تحديث جميع أجزاء لوحة التحكم
+    function renderAll() {
+      renderOverview();
+      renderMessages();
+      renderSchedules();
+      renderExams();
+      renderAnnouncements();
+      lucide.createIcons();
+    }
+
+    // تهيئة الصفحة عند التحميل
+    window.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      if (sessionStorage.getItem(AUTH_KEY) === 'authenticated') {
+        showDashboardView();
+      }
+    });
+  </script>
+</body>
+</html>
